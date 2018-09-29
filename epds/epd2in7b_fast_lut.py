@@ -180,7 +180,10 @@ class EPD:
         self.send_data(0xaf)        #KW-BF   KWR-AF    BWROTP 0f
         
         self.send_command(PLL_CONTROL)
-        self.send_data(0x3a)       #3A 100HZ   29 150Hz 39 200HZ    31 171HZ
+        # original freq
+        #self.send_data(0x3a)       #3A 100HZ   29 150Hz 39 200HZ    31 171HZ
+        # experimental mod by https://github.com/pskowronek/eink-clock-and-more - overclock a lil' bit
+        self.send_data(0x31)       #3A 100HZ   29 150Hz 39 200HZ    31 171HZ
 
         self.send_command(POWER_SETTING)
         self.send_data(0x03)                  # VDS_EN, VDG_EN
