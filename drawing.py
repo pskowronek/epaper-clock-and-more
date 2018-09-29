@@ -105,7 +105,7 @@ class Drawing(object):
             self.draw_text(205, top_y, caption, 60, draw, 255)
 
 
-    def draw_clock(self, img_buf, formatted_time):
+    def draw_clock(self, img_buf, formatted_time, use_hrs_mins_separator):
         start_pos = (0, 0)
         im_width = 100
         offs = 0
@@ -117,8 +117,9 @@ class Drawing(object):
             img_num = img_num.resize((img_num.size[0], img_num.size[1] / 2), Image.NEAREST)
             img_buf.paste(img_num, (start_pos[0] + offs, start_pos[1]))
             offs += im_width
-        divider = Image.open('resources/images/clock-middle.bmp')
-        img_buf.paste(divider, (self.CANVAS_WIDTH / 2 - 10, start_pos[1] + 10))
+        if use_hrs_mins_separator:
+            divider = Image.open('resources/images/clock-middle.bmp')
+            img_buf.paste(divider, (self.CANVAS_WIDTH / 2 - 10, start_pos[1] + 10))
 
 
     def draw_text_aqi(self, x, y, text, text_size, draw):    
@@ -250,14 +251,14 @@ class Drawing(object):
         return black_buf, red_buf
 
 
-    def draw_frame(self, is_mono, formatted_time, weather, airly, gmaps1, gmaps2):
+    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, airly, gmaps1, gmaps2):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
 
         # for mono display we simply use black buffer so all the painting will be done in black
         red_buf = black_buf if (is_mono) else Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
 
         # draw clock into buffer
-        self.draw_clock(black_buf, formatted_time)
+        self.draw_clock(black_buf, formatted_time, use_hrs_mins_separator)
 
         # draw time to dest into buffer
         self.draw_eta(0, black_buf, red_buf, gmaps1, self.primary_time_warn_above)

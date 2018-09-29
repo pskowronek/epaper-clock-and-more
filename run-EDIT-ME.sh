@@ -61,6 +61,9 @@ export SECOND_TIME_WARN_ABOVE_PERCENT=50
 # This env var will be evaluated by python - so becareful, first: don't expose this env to outside world (security), second: follow the syntax otherwise program will die
 #export DEAD_TIMES="[range(1,5),range(10,15)]"
 
+# Whether to draw two vertical dots to separate hours and minutes (to avoid confusion that a year is being displayed... yes, I know people who first thought that was a year displayed)
+export CLOCK_HRS_MINS_SEPARATOR=true
+
 # A type of EPAPER display you want to use - either Waveshare 4"2 (b&w) or 2"7 (tri-color) - this automatically sets EPAPER_MONO to "true" for 2"7 and to "false" for 4"2
 #export EPAPER_TYPE=waveshare-4.2
 export EPAPER_TYPE=waveshare-2.7
