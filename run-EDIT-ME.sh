@@ -46,8 +46,8 @@ export AQI_WARN_LEVEL=75                    # above this value the displayed gau
 export WEATHER_STORM_DISTANCE_WARN=10       # display warning if storm is closer than this value in km/miles (take a look at units above)
 
 # Lat & lon of destination you want to calculate the current driving time including traffic
-export FIRST_TIME_TO_DESTINATION_LAT=49.9684476
-export FIRST_TIME_TO_DESTINATION_LON=20.4303646
+export FIRST_TIME_TO_DESTINATION_LAT=49.9823219
+export FIRST_TIME_TO_DESTINATION_LON=20.0578518
 # The displayed gauge will become red (on supported displays) when driving time exceeds by % 
 export FIRST_TIME_WARN_ABOVE_PERCENT=50
 

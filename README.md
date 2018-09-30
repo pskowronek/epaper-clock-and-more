@@ -21,6 +21,11 @@ For both new gauges one may configure warning levels - in such a case the partic
 
 ## Screenshots / Photos
 
+### Screenshots
+![Screenshots](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/screenshots/epaper-screenshots.png)
+
+
+### Photos
 [![Assembled](https://pskowronek.github.io/epaper-clock-and-more/www/assembled/01.JPG)](https://pskowronek.github.io/epaper-clock-and-more/www/assembled/index.html "Photos of assembled epaper + rasberry pi zero running epaper-clock-and-more")
 
 More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry Pi zero enclosed in a custom-built LEGO™ housing and running this project are [here](https://pskowronek.github.io/epaper-clock-and-more/www/assembled/index.html "Photos of assembled epaper + rasberry pi zero running epaper-clock-and-more").
