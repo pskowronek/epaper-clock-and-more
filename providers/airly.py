@@ -8,13 +8,13 @@ import requests
 from collections import namedtuple
 
 
-AirlyTuple = namedtuple('Airly', ['pm25', 'pm10', 'hummidity', 'pressure', 'aqi', 'level', 'advice'])
+AirlyTuple = namedtuple('Airly', ['pm25', 'pm10', 'hummidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
 
 
 class Airly(Acquire):
 
 
-    DEFAULT = AirlyTuple(pm25=-1, pm10=-1, pressure=-1, hummidity=-1, aqi=-1, level='n/a', advice='n/a')
+    DEFAULT = AirlyTuple(pm25=-1, pm10=-1, pressure=-1, hummidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
 
 
     def __init__(self, key, lat, lon, cache_ttl):
@@ -65,6 +65,7 @@ class Airly(Acquire):
                 pm10=airly_data["current"]["values"][2]['value'],
                 pressure=airly_data["current"]["values"][3]['value'],
                 hummidity=airly_data["current"]["values"][4]['value'],
+                temperature=airly_data["current"]["values"][5]['value'],
                 aqi=airly_data["current"]["indexes"][0]['value'],
                 level=airly_data["current"]["indexes"][0]['level'],
                 advice=airly_data["current"]["indexes"][0]['advice']

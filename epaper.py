@@ -20,6 +20,8 @@ class EPaper(object):
     DEAD_TIMES = eval(os.environ.get("DEAD_TIMES", "[]"))
     # whether to display two vertical dots to separate hrs and mins
     CLOCK_HOURS_MINS_SEPARATOR = os.environ.get("CLOCK_HRS_MINS_SEPARATOR", "true") == "true"
+    # whether to prefer AQI temperature instead of DarkSky's
+    PREFER_AIRLY_LOCAL_TEMP = os.environ.get("PREFER_AIRLY_LOCAL_TEMP", "false") == "true"
 
     DEVICE_TYPE = os.environ.get("EPAPER_TYPE", 'waveshare-2.7')
 
@@ -194,6 +196,7 @@ class EPaper(object):
                 formatted,
                 self.CLOCK_HOURS_MINS_SEPARATOR,
                 weather_data,
+                self.PREFER_AIRLY_LOCAL_TEMP,
                 airly_data,
                 gmaps1_data,
                 gmaps2_data

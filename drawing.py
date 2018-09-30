@@ -41,9 +41,9 @@ class Drawing(object):
     def draw_multiline_text(self, x, y, text, font_size, draw, color=0):
         height = 0
         font = self.load_font(font_size)
-        text_width = font.getsize(text)
-        if text_width[0] * 1.05 > self.CANVAS_WIDTH - x:
-            break_at = len(text) * (self.CANVAS_WIDTH - x) / text_width[0]  # rough estimation (proportion: text width to screen size minus start pos vs unknown to string len)
+        text_dims = font.getsize(text)
+        if text_dims[0] * 1.05 > self.CANVAS_WIDTH - x:
+            break_at = len(text) * (self.CANVAS_WIDTH - x) / text_dims[0]  # rough estimation (proportion: text width to screen size minus start pos vs unknown to string len)
             lines = textwrap.wrap(text, width=break_at)
             line_counter = 0
             for line in lines:
@@ -62,7 +62,7 @@ class Drawing(object):
         buf.paste(img_icon, pos)
 
 
-    def draw_weather(self, buf, red_buf, weather):
+    def draw_weather(self, buf, red_buf, weather, airly, prefer_airly_local_temp):
         start_pos = (0, 200)
     
         back = Image.open('./resources/images/back.bmp')
@@ -81,7 +81,11 @@ class Drawing(object):
 
         top_y = start_pos[1] - 6
 
-        caption = "{:0.0f}{}".format(weather.temp, self.TEMPERATURE_SYMBOL.encode('utf-8'))
+        current_temp = weather.temp
+        if prefer_airly_local_temp and airly.temperature is not None:
+            current_temp = airly.temperature
+
+        caption = "{:0.0f}{}".format(current_temp, self.TEMPERATURE_SYMBOL.encode('utf-8'))
         self.draw_text(85, top_y, caption, 90, draw, 255)
 
         storm_distance_warning = self.storm_distance_warn
@@ -122,15 +126,16 @@ class Drawing(object):
             img_buf.paste(divider, (self.CANVAS_WIDTH / 2 - 10, start_pos[1] + 10))
 
 
-    def draw_text_aqi(self, x, y, text, text_size, draw):    
+    def draw_text_aqi(self, x, y, text, text_size, draw):
         font = self.load_font(text_size)
-        font_width = font.getsize(text)
+        font_dims = font.getsize(text)
 
         # lower font size to accommodate huge polution levels
-        if font_width[0] > 100:
+        if font_dims[0] > 100:
             font = self.load_font(text_size * 2 / 3)
-
-        draw.text((x, y), unicode(text, "utf-8"), font=font, fill=255)
+            draw.text((x, y + 15), unicode(text, "utf-8"), font=font, fill=255)
+        else:
+            draw.text((x, y), unicode(text, "utf-8"), font=font, fill=255)
 
 
     def draw_text_eta(self, x, y, text, text_size, draw):    
@@ -251,7 +256,7 @@ class Drawing(object):
         return black_buf, red_buf
 
 
-    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, airly, gmaps1, gmaps2):
+    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, prefer_airly_local_temp, airly, gmaps1, gmaps2):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
 
         # for mono display we simply use black buffer so all the painting will be done in black
@@ -270,7 +275,7 @@ class Drawing(object):
         self.draw_airly(black_buf, red_buf, airly)
 
         # draw weather into buffer
-        self.draw_weather(black_buf, red_buf, weather)
+        self.draw_weather(black_buf, red_buf, weather, airly, prefer_airly_local_temp)
 
         return black_buf, red_buf
 
