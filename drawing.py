@@ -18,6 +18,8 @@ class Drawing(object):
 
     # Temperature symbol
     TEMPERATURE_SYMBOL = u'°'
+    # PM values symbol
+    PM_SYMBOL = u'µg/m³'
 
 
     def __init__(self, darksky_units, storm_distance_warn, aqi_warn_level, primary_time_warn_above, secondary_time_warn_above):
@@ -197,11 +199,12 @@ class Drawing(object):
         draw = ImageDraw.Draw(black_buf)
         self.draw_text(10, 10, "Air Quality Index by Airly.eu", 35, draw)
 
-        self.draw_text(10, 60, "PM 2.5: {}, PM 10: {}".format(airly.pm25, airly.pm10), 30, draw)
-        self.draw_text(10, 90, "AQI: {}, level: {}".format(airly.aqi, airly.level), 30, draw)
-        y = self.draw_multiline_text(10, 140, "Advice: {}".format(airly.advice.encode('utf-8')), 25, draw)
-        y = self.draw_text(10, y, "Hummidity: {}".format(airly.hummidity), 30, draw)
-        y = self.draw_text(10, y, "Pressure:  {}".format(airly.pressure), 30, draw)
+        y = self.draw_text(10, 60, "PM2.5: {:0.0f}, PM10: {:0.0f} ({})".format(airly.pm25, airly.pm10, self.PM_SYMBOL.encode('utf-8')), 30, draw)
+        y = self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(airly.aqi, airly.level.replace('_', ' ').encode('utf-8')), 30, draw)
+        y = self.draw_multiline_text(10, y, "Advice: {}".format(airly.advice.encode('utf-8')), 25, draw)
+        y = self.draw_text(10, y, "Hummidity: {} %".format(airly.hummidity), 30, draw)
+        y = self.draw_text(10, y, "Pressure:  {} hPa".format(airly.pressure), 30, draw)
+        y = self.draw_text(10, y, "Temperature: {} {}C".format(airly.temperature, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
 
         return black_buf, red_buf
 
@@ -212,14 +215,24 @@ class Drawing(object):
         draw = ImageDraw.Draw(black_buf)
         self.draw_text(10, 10, "Traffic info by Google", 35, draw)
 
-        y = self.draw_multiline_text(10, 50, "From: {}".format(gmaps1.origin_address.encode('utf-8')), 25, draw)
-        y = self.draw_multiline_text(10, y, "To #1: {}".format(gmaps1.destination_address.encode('utf-8')), 25, draw)
+        y = self.draw_multiline_text(10, 50, "From: {}".format(self.trim_address(gmaps1.origin_address).encode('utf-8')), 25, draw)
+        y += 5
+        y = self.draw_multiline_text(10, y, "To #1: {}".format(self.trim_address(gmaps1.destination_address).encode('utf-8')), 25, draw)
         y = self.draw_text(10, y, "{}, avg: {}m, now: {}m".format(gmaps1.distance, gmaps1.time_to_dest / 60, gmaps1.time_to_dest_in_traffic / 60), 30, draw)
 
-        y = self.draw_multiline_text(10, y, "To #2: {}".format(gmaps2.destination_address.encode('utf-8')), 25, draw)
+        y += 5
+        y = self.draw_multiline_text(10, y, "To #2: {}".format(self.trim_address(gmaps2.destination_address).encode('utf-8')), 25, draw)
         self.draw_text(10, y, "{}, avg: {}m, now: {}m".format(gmaps2.distance, gmaps2.time_to_dest / 60, gmaps2.time_to_dest_in_traffic / 60), 30, draw)
 
         return black_buf, red_buf
+
+
+    def trim_address(self, address):
+        idx = address.rindex(',')
+        if idx > 0:
+            return address[0:idx]
+        else:
+            return address
 
 
     def draw_weather_details(self, weather):
