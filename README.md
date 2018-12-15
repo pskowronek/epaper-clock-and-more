@@ -8,7 +8,7 @@ _Language versions:_\
 # Clock + weather + AQI + traffic - on Raspberry Pi & e-paper [![Build Status](https://travis-ci.org/pskowronek/epaper-clock-and-more.svg?branch=master)](https://travis-ci.org/pskowronek/epaper-clock-and-more)
 
 This is a forked project of [waveshare-clock](https://github.com/prehensile/waveshare-clock) that only displayed clock and weather and supported only Waveshare 4.2inch B&W displays.
-This project enhances the original project to support Waveshare 2.7inch displays with red die (BWR) and adds the following additional features:
+This project enhances the original project to support Waveshare 2.7inch displays with red dye (BWR) and adds the following additional features:
 - gauges for current traffic drive times for two configured destinations (thanks to [Google Maps API](https://developers.google.com/maps/documentation/))
 - gauge for air quality index (AQI) of home location (thanks to [Airly.eu API](http://developer.airly.eu/))
 - weather gauge may display:
@@ -81,7 +81,7 @@ E-paper 2.7inch by Waveshare does not support partial refresh and every modifica
 
 ### 2.7inch display refresh made faster
 
-You may try to turn on experimental feature to make display refresh much faster (10x quicker for black die, 2-3 times quicker for red die).
+You may try to turn on experimental feature to make display refresh much faster (10x quicker for black dye, 2-3 times quicker for red dye).
 This has been achieved by modification of LUT tables of original ```epd2in7b.py``` Waveshare library. The LUT tables are used by the display
 to create "waveforms" that refresh every pixel. This of course has negative consequences - the refresh isn't perfect (but still okey) and
 artifacts may build-up with time. To recover the display you would need to turn off this feature and run the project for a while using original LUT tables.
