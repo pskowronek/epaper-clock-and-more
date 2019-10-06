@@ -98,7 +98,10 @@ class Drawing(object):
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
             self.draw_multiline_text(220, top_y, caption, 23, red_draw, 255)
-        elif weather.nearest_storm_distance is not None and weather.nearest_storm_distance <= storm_distance_warning:
+        elif (weather.nearest_storm_distance is not None and
+              weather.nearest_storm_distance > 0 and
+              weather.nearest_storm_distance <= storm_distance_warning
+              ):
             top_y = top_y + 3
             caption = "Storm @ {}{}".format(weather.nearest_storm_distance, self.distance_symbol)
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
