@@ -97,13 +97,15 @@ class Drawing(object):
             caption = "[!] {}".format(weather.alert_title.lower().encode('utf-8'))
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
-            self.draw_multiline_text(220, top_y, caption, 23, red_draw, 255)
+            self.draw_multiline_text(220, top_y, caption, 23, draw, 0)          # black text
+            self.draw_multiline_text(220, top_y, caption, 23, red_draw, 255)    # on red canvas
         elif weather.nearest_storm_distance is not None and weather.nearest_storm_distance <= storm_distance_warning:
             top_y = top_y + 3
             caption = "Storm @ {}{}".format(weather.nearest_storm_distance, self.distance_symbol)
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
             top_y = top_y + 7
+            self.draw_multiline_text(230, top_y, caption, 40, draw, 0)
             self.draw_multiline_text(230, top_y, caption, 40, red_draw, 255)
         else:
             top_y = top_y + 17
@@ -140,7 +142,7 @@ class Drawing(object):
             draw.text((x, y), unicode(text, "utf-8"), font=font, fill=255)
 
 
-    def draw_text_eta(self, x, y, text, text_size, draw):    
+    def draw_text_eta(self, x, y, text, text_size, draw, font_color=255):
         font = self.load_font(text_size)
         font_width = font.getsize(text)
     
@@ -153,7 +155,7 @@ class Drawing(object):
         if font_width[0] > 100:
             font = self.load_font(text_size * 2 / 4)
 
-        draw.text((x, y), unicode(text, "utf-8"), font=font, fill=255)
+        draw.text((x, y), unicode(text, "utf-8"), font=font, fill=font_color)
 
 
     def draw_airly(self, black_buf, red_buf, airly):
@@ -173,7 +175,9 @@ class Drawing(object):
         start_pos = (50  + ((idx + 1) * self.CANVAS_WIDTH) / 3, 100)
         secs_in_traffic = 1.0 * gmaps.time_to_dest_in_traffic
         secs = 1.0 * gmaps.time_to_dest
-        buf = black_buf if secs < 0 or secs * (100.0 + warn_above_percent) / 100.0 > secs_in_traffic else red_buf
+        
+        no_warn = secs < 0 or secs * (100.0 + warn_above_percent) / 100.0 > secs_in_traffic
+        buf = black_buf if no_warn else red_buf
 
         back = Image.open("./resources/images/back_eta_{}.bmp".format(idx))
         buf.paste(back, (((idx + 1) * self.CANVAS_WIDTH) / 3 , 100))
@@ -182,7 +186,11 @@ class Drawing(object):
 
         caption = "%2i" % int(round(secs_in_traffic / 60))
 
-        self.draw_text_eta(start_pos[0], start_pos[1], caption, 70, draw)
+        if not no_warn:
+            black_draw = ImageDraw.Draw(black_buf)
+            self.draw_text_eta(start_pos[0], start_pos[1], caption, 70, black_draw, 0)  # black font on red canvas below
+
+        self.draw_text_eta(start_pos[0], start_pos[1], caption, 70, draw, 255)
 
 
     def draw_shutdown(self, is_mono):
@@ -228,7 +236,7 @@ class Drawing(object):
 
 
     def trim_address(self, address):
-        idx = address.rindex(',')
+        idx = address.rfind(',')
         if idx > 0:
             return address[0:idx]
         else:
