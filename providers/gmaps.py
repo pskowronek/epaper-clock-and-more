@@ -82,7 +82,7 @@ class GMaps(Acquire):
 
             return GMapsTuple(
                 time_to_dest=gmaps_data['rows'][0]['elements'][0]['duration']['value'],  # in seconds
-                time_to_dest_in_traffic=gmaps_data['rows'][0]['elements'][0]['duration_in_traffic']['value'],  # in seconds
+                time_to_dest_in_traffic=10*gmaps_data['rows'][0]['elements'][0]['duration_in_traffic']['value'],  # in seconds
                 distance=gmaps_data['rows'][0]['elements'][0]['distance']['text'],  # in km, string with km
                 origin_address=gmaps_data['origin_addresses'][0],
                 destination_address=gmaps_data['destination_addresses'][0]

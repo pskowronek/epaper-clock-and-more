@@ -56,6 +56,12 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - a key for weather forecast from DarkSky.net - you can get it [here](https://darksky.net/dev/register) *)
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
+  - tweak additional settings to:
+    - prefer local temperature readings as served by Airly instead of DarkSky
+    - display warnings using black font instead of white on red canvas (more readable if red dye faded out)
+    - switch 2.7 BWR into BW
+    - turn off displaying hours & minutes separator
+    - enable/disable debug mode, buttons etc
 - run the script: ```./run.sh``` (hit Ctrl-C to exit) and verify if it works as expected
 - install this project as a service so it could automatically run when Raspberry boots up (more details [here](https://www.raspberrypi.org/documentation/linux/usage/systemd.md))
   - copy epaper.service to /etc/systemd/system: ```sudo cp epaper.service /etc/systemd/system/``` **)

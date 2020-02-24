@@ -22,6 +22,8 @@ class EPaper(object):
     CLOCK_HOURS_MINS_SEPARATOR = os.environ.get("CLOCK_HRS_MINS_SEPARATOR", "true") == "true"
     # whether to prefer AQI temperature instead of DarkSky's
     PREFER_AIRLY_LOCAL_TEMP = os.environ.get("PREFER_AIRLY_LOCAL_TEMP", "false") == "true"
+    # warn states painted black instead of white on red canvas?
+    WARN_PAINTED_BLACK_ON_RED = os.environ.get("WARN_PAINTED_BLACK_ON_RED", "false") == "true"
 
     DEVICE_TYPE = os.environ.get("EPAPER_TYPE", 'waveshare-2.7')
 
@@ -197,6 +199,7 @@ class EPaper(object):
                 self.CLOCK_HOURS_MINS_SEPARATOR,
                 weather_data,
                 self.PREFER_AIRLY_LOCAL_TEMP,
+                self.WARN_PAINTED_BLACK_ON_RED,
                 airly_data,
                 gmaps1_data,
                 gmaps2_data

@@ -57,6 +57,9 @@ export SECOND_TIME_TO_DESTINATION_LON=20.4303646
 # The displayed gauge will become red (on supported displays) when driving time exceeds by % 
 export SECOND_TIME_WARN_ABOVE_PERCENT=50
 
+# Whether to paint black font on red canvas (for warn statuses) - helps visual espect if red dye faded out already
+export WARN_PAINTED_BLACK_ON_RED=false
+
 # Dead times - between stated hours data & display update is being done once in an hour and minutes won't be displayed. Default is [] - no dead times.
 # This env var will be evaluated by python - so becareful, first: don't expose this env to outside world (security), second: follow the syntax otherwise program will die
 #export DEAD_TIMES="[range(1,5),range(10,15)]"
@@ -64,7 +67,7 @@ export SECOND_TIME_WARN_ABOVE_PERCENT=50
 # Whether to draw two vertical dots to separate hours and minutes (to avoid confusion that a year is being displayed... yes, I know people who first thought that was a year displayed)
 export CLOCK_HRS_MINS_SEPARATOR=true
 
-# Whether to prefer Airly.eu local temperature if available instead of current temperature returned by Airly. Metric (Celsius) temperature only.
+# Whether to prefer Airly.eu local temperature if available instead of current temperature returned by DarkSky. Metric (Celsius) temperature only.
 #export PREFER_AIRLY_LOCAL_TEMP=false
 
 # A type of EPAPER display you want to use - either Waveshare 4"2 (b&w) or 2"7 (tri-color) - this automatically sets EPAPER_MONO to "true" for 2"7 and to "false" for 4"2

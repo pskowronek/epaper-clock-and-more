@@ -61,12 +61,12 @@ class Airly(Acquire):
                 return self.DEFAULT
 
             return AirlyTuple(
-                pm25=airly_data["current"]["values"][1]['value'],
+                pm25=10*airly_data["current"]["values"][1]['value'],
                 pm10=airly_data["current"]["values"][2]['value'],
                 pressure=airly_data["current"]["values"][3]['value'],
                 hummidity=airly_data["current"]["values"][4]['value'],
                 temperature=airly_data["current"]["values"][5]['value'],
-                aqi=airly_data["current"]["indexes"][0]['value'],
+                aqi=10*airly_data["current"]["indexes"][0]['value'],
                 level=airly_data["current"]["indexes"][0]['level'],
                 advice=airly_data["current"]["indexes"][0]['advice']
             )

@@ -64,7 +64,7 @@ class Drawing(object):
         buf.paste(img_icon, pos)
 
 
-    def draw_weather(self, buf, red_buf, weather, airly, prefer_airly_local_temp):
+    def draw_weather(self, buf, red_buf, weather, airly, prefer_airly_local_temp, black_on_red):
         start_pos = (0, 200)
     
         back = Image.open('./resources/images/back.bmp')
@@ -97,7 +97,8 @@ class Drawing(object):
             caption = "[!] {}".format(weather.alert_title.lower().encode('utf-8'))
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
-            self.draw_multiline_text(220, top_y, caption, 23, draw, 0)          # black text
+            if black_on_red:
+                self.draw_multiline_text(220, top_y, caption, 23, draw, 0)      # black text
             self.draw_multiline_text(220, top_y, caption, 23, red_draw, 255)    # on red canvas
         elif weather.nearest_storm_distance is not None and weather.nearest_storm_distance <= storm_distance_warning:
             top_y = top_y + 3
@@ -105,8 +106,9 @@ class Drawing(object):
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
             top_y = top_y + 7
-            self.draw_multiline_text(230, top_y, caption, 40, draw, 0)
-            self.draw_multiline_text(230, top_y, caption, 40, red_draw, 255)
+            if black_on_red:
+                self.draw_multiline_text(230, top_y, caption, 40, draw, 0)      # black text
+            self.draw_multiline_text(230, top_y, caption, 40, red_draw, 255)    # on red canvas
         else:
             top_y = top_y + 17
             caption = "{:0.0f}{} {:0.0f}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL.encode('utf-8'), weather.temp_max, self.TEMPERATURE_SYMBOL.encode('utf-8'))
@@ -130,16 +132,16 @@ class Drawing(object):
             img_buf.paste(divider, (self.CANVAS_WIDTH / 2 - 10, start_pos[1] + 10))
 
 
-    def draw_text_aqi(self, x, y, text, text_size, draw):
+    def draw_text_aqi(self, x, y, text, text_size, draw, font_color=255):
         font = self.load_font(text_size)
         font_dims = font.getsize(text)
 
         # lower font size to accommodate huge polution levels
         if font_dims[0] > 100:
             font = self.load_font(text_size * 2 / 3)
-            draw.text((x, y + 15), unicode(text, "utf-8"), font=font, fill=255)
+            draw.text((x, y + 15), unicode(text, "utf-8"), font=font, fill=font_color)
         else:
-            draw.text((x, y), unicode(text, "utf-8"), font=font, fill=255)
+            draw.text((x, y), unicode(text, "utf-8"), font=font, fill=font_color)
 
 
     def draw_text_eta(self, x, y, text, text_size, draw, font_color=255):
@@ -158,9 +160,10 @@ class Drawing(object):
         draw.text((x, y), unicode(text, "utf-8"), font=font, fill=font_color)
 
 
-    def draw_airly(self, black_buf, red_buf, airly):
+    def draw_airly(self, black_buf, red_buf, airly, black_on_red):
         start_pos = (0, 100)
-        buf = black_buf if airly.aqi < self.aqi_warn_level else red_buf
+        no_warn = airly.aqi < self.aqi_warn_level
+        buf = black_buf if no_warn else red_buf
 
         back = Image.open('./resources/images/back_aqi.bmp')
         buf.paste(back, start_pos)
@@ -168,10 +171,13 @@ class Drawing(object):
         draw = ImageDraw.Draw(buf)
 
         caption = "%3i" % int(round(airly.aqi))
-        self.draw_text_aqi(start_pos[0] + 25, start_pos[1] - 5, caption, 90, draw)
+        if not no_warn and black_on_red:
+            black_draw = ImageDraw.Draw(black_buf)
+            self.draw_text_aqi(start_pos[0] + 25, start_pos[1] - 5, caption, 90, black_draw, 0)
+        self.draw_text_aqi(start_pos[0] + 25, start_pos[1] - 5, caption, 90, draw, 255)
 
 
-    def draw_eta(self, idx, black_buf, red_buf, gmaps, warn_above_percent):
+    def draw_eta(self, idx, black_buf, red_buf, gmaps, warn_above_percent, black_on_red):
         start_pos = (50  + ((idx + 1) * self.CANVAS_WIDTH) / 3, 100)
         secs_in_traffic = 1.0 * gmaps.time_to_dest_in_traffic
         secs = 1.0 * gmaps.time_to_dest
@@ -186,7 +192,7 @@ class Drawing(object):
 
         caption = "%2i" % int(round(secs_in_traffic / 60))
 
-        if not no_warn:
+        if not no_warn and black_on_red:
             black_draw = ImageDraw.Draw(black_buf)
             self.draw_text_eta(start_pos[0], start_pos[1], caption, 70, black_draw, 0)  # black font on red canvas below
 
@@ -277,7 +283,7 @@ class Drawing(object):
         return black_buf, red_buf
 
 
-    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, prefer_airly_local_temp, airly, gmaps1, gmaps2):
+    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, prefer_airly_local_temp, black_on_red, airly, gmaps1, gmaps2):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
 
         # for mono display we simply use black buffer so all the painting will be done in black
@@ -287,16 +293,16 @@ class Drawing(object):
         self.draw_clock(black_buf, formatted_time, use_hrs_mins_separator)
 
         # draw time to dest into buffer
-        self.draw_eta(0, black_buf, red_buf, gmaps1, self.primary_time_warn_above)
+        self.draw_eta(0, black_buf, red_buf, gmaps1, self.primary_time_warn_above, black_on_red)
 
         # draw time to dest into buffer
-        self.draw_eta(1, black_buf, red_buf, gmaps2, self.secondary_time_warn_above)
+        self.draw_eta(1, black_buf, red_buf, gmaps2, self.secondary_time_warn_above, black_on_red)
 
         # draw AQI into buffer
-        self.draw_airly(black_buf, red_buf, airly)
+        self.draw_airly(black_buf, red_buf, airly, black_on_red)
 
         # draw weather into buffer
-        self.draw_weather(black_buf, red_buf, weather, airly, prefer_airly_local_temp)
+        self.draw_weather(black_buf, red_buf, weather, airly, prefer_airly_local_temp, black_on_red)
 
         return black_buf, red_buf
 
