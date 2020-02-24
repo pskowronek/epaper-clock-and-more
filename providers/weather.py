@@ -79,7 +79,7 @@ class Weather(Acquire):
                 summary=c['summary'],
                 forecast_summary=forecast_data['daily']['summary'],
                 nearest_storm_distance=c.get('nearestStormDistance', None),
-                alert_title='aaaaaaa', #a[0]['title'] if a is not None else None,
+                alert_title=a[0]['title'] if a is not None else None,
                 alert_description=a[0]['description'] if a is not None else None,
             )
 
