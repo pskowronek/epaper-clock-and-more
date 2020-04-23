@@ -53,7 +53,11 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - your home location (lon & lat)
   - two destinations to check traffic delays
   - a key for traffic information from Google Maps - you can get it [here](https://developers.google.com/maps/documentation/embed/get-api-key) *)
-  - a key for weather forecast from DarkSky.net - you can get it [here](https://darksky.net/dev/register) *)
+    - it is wise to read Google Maps [documentation](https://developers.google.com/maps/documentation/)
+    - tl;dr: basically you have to enable Distance Matrix API - follow [these](https://developers.google.com/maps/documentation/distance-matrix/start#authentication) instructions,
+      then you have to enable billing for it - just go [there](https://console.cloud.google.com/billing) - don't worry, they won't charge you if you are below the limits
+  - a key for weather forecast from DarkSky.net - ~~you can get it [here](https://darksky.net/dev/register)~~ *)
+    - ** DarkSky has been recently acquired by Apple since then no new submissions are being accepted ** - WiP for an alternative vendor [#4]
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
   - tweak additional settings to:
