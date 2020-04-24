@@ -29,8 +29,8 @@ export LON=20.0373204
 
 # A key for traffic delays from Google Maps Distance Matrix API
 export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://developers.google.com/maps/documentation/embed/get-api-key
-# A key for weather forecasts from OpenWeatherMap One Call API
-export OPENWEATHERMAP_KEY=GET_YOUR_OWN_KEY  # get the key from: https://openweathermap.org/home/sign_up
+# A key for weather forecasts from OpenWeather One Call API
+export OPENWEATHER_KEY=GET_YOUR_OWN_KEY  # get the key from: https://openweathermap.org/home/sign_up
 # A key for AQI (Air Quality Index) from AIRLY.EU API (data for certain countries only, as yet, but you may order their device to provide data also for your neighbours)
 export AIRLY_KEY=GET_YOUR_OWN_KEY           # get the key from: https://developer.airly.eu/register
 
@@ -41,13 +41,13 @@ export DARKSKY_KEY=GET_YOUR_OWN_KEY         # get the key from: https://darksky.
 # Cache TTLs in minutes for each data fetcher (refer to free accounts limitations before you change the values any lower than 10m)
 export GOOGLE_MAPS_TTL=10
 export AIRLY_TTL=20
-export OPENWEATHERMAP_TTL=15
+export OPENWEATHER_TTL=15
 export DARKSKY_TTL=15                       # deprecated
 
 
 # Units
 export GOOGLE_MAPS_UNITS=metric             # refer to: https://developers.google.com/maps/documentation/distance-matrix/intro#unit_systems for allowed values (metric, imperial)
-export OPENWEATHERMAP_UNITS=metric          # refer to: https://openweathermap.org/api/one-call-api#data for allowed values (metric, imperial, etc)
+export OPENWEATHER_UNITS=metric             # refer to: https://openweathermap.org/api/one-call-api#data for allowed values (metric, imperial, etc)
 export DARK_SKY_UNITS=si                    # refer to: https://darksky.net/dev/docs for allowed values (si, us, auto, etc) 
 
 # Warning levels

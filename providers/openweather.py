@@ -13,7 +13,7 @@ class OpenWeather(Acquire):
 
 
     DEFAULT = OpenWeatherTuple(temp=-99, temp_min=-99, temp_max=-99, icon='n/a', summary='n/a',
-                                  forecast_summary='n/a', nearest_storm_distance=None, alert_title=None, alert_description=None)
+                               forecast_summary='n/a', nearest_storm_distance=None, alert_title=None, alert_description=None)
 
 
     def __init__(self, key, lat, lon, units, cache_ttl):
