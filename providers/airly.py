@@ -58,7 +58,7 @@ class Airly(Acquire):
         try:
             airly_data = self.load()
             if airly_data is None or not airly_data["current"] or not airly_data["current"]["values"]:
-                logging.warn("No reasonable data returned by Airly. Check API key (status code) or whether the location has any sesnors around (visit https://airly.eu/map/en/)")
+                logging.warn("No reasonable data returned by Airly. Check API key (status code) or whether the location has any sensors around (visit: https://airly.eu/map/en/)")
                 return self.DEFAULT
 
             return AirlyTuple(

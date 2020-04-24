@@ -115,7 +115,7 @@ def action_button(key, epaper):
     if key == 1:
         details_to_display = lambda: epaper.display_gmaps_details()
     elif key == 2:
-        details_to_display = lambda: epaper.display_airly_details()
+        details_to_display = lambda: epaper.display_aqi_details()
     elif key == 3:
         details_to_display = lambda: epaper.display_weather_details()
     elif key == 4:
@@ -129,7 +129,7 @@ def refresh_main_screen(epaper, force = False):
     epaper.display_main_screen(utc_dt.astimezone(get_localzone()), force)
     if DEBUG_MODE:
         epaper.display_weather_details()
-        epaper.display_airly_details()
+        epaper.display_aqi_details()
         epaper.display_gmaps_details()
         epaper.display_system_details()
 

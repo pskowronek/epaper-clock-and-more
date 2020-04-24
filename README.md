@@ -10,7 +10,7 @@ _Language versions:_\
 This is a forked project of [waveshare-clock](https://github.com/prehensile/waveshare-clock) that only displayed clock and weather and supported only Waveshare 4.2inch B&W displays.
 This project enhances the original project to support Waveshare 2.7inch displays with red dye (BWR) and adds the following additional features:
 - gauges for current traffic drive times for two configured destinations (thanks to [Google Maps API](https://developers.google.com/maps/documentation/))
-- gauge for air quality index (AQI) of home location (thanks to [Airly.eu API](http://developer.airly.eu/))
+- gauge for air quality index (AQI) of home location (thanks to [Airly.eu API](http://developer.airly.eu/) or [World Air Quality Index API](https://aqicn.org))
 - weather gauge can display:
   - current temperature + weather status icon plus forecast: daily min/max temperatures (thanks to [OpenWeather API](https://openweathermap.org))
   - ~~alerts issued by governmental authorities - it works for the EU, US & Canada (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~ DarkSky is being phased out - see below
@@ -63,6 +63,8 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
     - **DarkSky has been recently acquired by Apple since then no new submissions are being accepted**
     - DarkSky is now in fallback mode (if not OpenWeather key is provided) and it's been set as deprecated (should work until the end of 2021)
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
+    - alternatively you can use World Air Quality Index API - you can get it [here](https://aqicn.org/data-platform/token/) *)
+    - WAQI (aqicn.org) works as a fallback if you don't specify the token for Airly
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
   - tweak additional settings to:
     - prefer local temperature readings as served by Airly instead of weather provider(s)

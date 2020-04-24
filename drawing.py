@@ -163,9 +163,9 @@ class Drawing(object):
         draw.text((x, y), unicode(text, "utf-8"), font=font, fill=font_color)
 
 
-    def draw_airly(self, black_buf, red_buf, airly, black_on_red):
+    def draw_aqi(self, black_buf, red_buf, aqi, black_on_red):
         start_pos = (0, 100)
-        no_warn = airly.aqi < self.aqi_warn_level
+        no_warn = aqi.aqi < self.aqi_warn_level
         buf = black_buf if no_warn else red_buf
 
         back = Image.open('./resources/images/back_aqi.bmp')
@@ -173,7 +173,7 @@ class Drawing(object):
 
         draw = ImageDraw.Draw(buf)
 
-        caption = "%3i" % int(round(airly.aqi))
+        caption = "%3i" % int(round(aqi.aqi))
         if not no_warn and black_on_red:
             black_draw = ImageDraw.Draw(black_buf)
             self.draw_text_aqi(start_pos[0] + 25, start_pos[1] - 5, caption, 90, black_draw, 0)
@@ -210,18 +210,24 @@ class Drawing(object):
         return black_buf, red_buf
 
 
-    def draw_airly_details(self, airly):
+    def draw_aqi_details(self, aqi):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         draw = ImageDraw.Draw(black_buf)
-        self.draw_text(10, 10, "Air Quality Index by Airly.eu", 35, draw)
 
-        y = self.draw_text(10, 60, "PM2.5: {:0.0f}, PM10: {:0.0f} ({})".format(airly.pm25, airly.pm10, self.PM_SYMBOL.encode('utf-8')), 30, draw)
-        y = self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(airly.aqi, airly.level.replace('_', ' ').encode('utf-8')), 30, draw)
-        y = self.draw_multiline_text(10, y, "Advice: {}".format(airly.advice.encode('utf-8')), 25, draw)
-        y = self.draw_text(10, y, "Hummidity: {} %".format(airly.hummidity), 30, draw)
-        y = self.draw_text(10, y, "Pressure:  {} hPa".format(airly.pressure), 30, draw)
-        y = self.draw_text(10, y, "Temperature: {} {}C".format(airly.temperature, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
+        provider = 'Airly.eu' if 'providers.airly.Airly' in str(type(aqi)) else 'AQICN'
+        self.draw_text(10, 10, "Air Quality Index by {}".format(provider), 35, draw)
+
+        y = self.draw_text(10, 60, "PM2.5: {:0.0f}, PM10: {:0.0f} ({})".format(aqi.pm25, aqi.pm10, self.PM_SYMBOL.encode('utf-8')), 30, draw)
+        self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(aqi.aqi, aqi.level.replace('_', ' ').encode('utf-8') if aqi.level else 'N/A'), 30, draw)
+        if aqi.advice:
+            y = self.draw_multiline_text(10, y, "Advice: {}".format(aqi.advice.encode('utf-8')) if aqi.advice else 'N/A', 25, draw)
+        if aqi.hummidity != -1:
+            y = self.draw_text(10, y, "Hummidity: {} %".format(aqi.hummidity), 30, draw)
+        if aqi.pressure != -1:
+            y = self.draw_text(10, y, "Pressure:  {} hPa".format(aqi.pressure), 30, draw)
+        if aqi.temperature:
+            y = self.draw_text(10, y, "Temperature: {} {}C".format(aqi.temperature, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
 
         return black_buf, red_buf
 
@@ -287,7 +293,7 @@ class Drawing(object):
         return black_buf, red_buf
 
 
-    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, prefer_airly_local_temp, black_on_red, airly, gmaps1, gmaps2):
+    def draw_frame(self, is_mono, formatted_time, use_hrs_mins_separator, weather, prefer_airly_local_temp, black_on_red, aqi, gmaps1, gmaps2):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
 
         # for mono display we simply use black buffer so all the painting will be done in black
@@ -303,10 +309,10 @@ class Drawing(object):
         self.draw_eta(1, black_buf, red_buf, gmaps2, self.secondary_time_warn_above, black_on_red)
 
         # draw AQI into buffer
-        self.draw_airly(black_buf, red_buf, airly, black_on_red)
+        self.draw_aqi(black_buf, red_buf, aqi, black_on_red)
 
         # draw weather into buffer
-        self.draw_weather(black_buf, red_buf, weather, airly, prefer_airly_local_temp, black_on_red)
+        self.draw_weather(black_buf, red_buf, weather, aqi, prefer_airly_local_temp, black_on_red)
 
         return black_buf, red_buf
 

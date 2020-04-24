@@ -8,6 +8,7 @@ from PIL import Image
 
 from drawing import Drawing
 from providers.airly import Airly
+from providers.aqicn import Aqicn
 from providers.darksky import DarkSky
 from providers.openweather import OpenWeather
 from providers.gmaps import GMaps
@@ -55,12 +56,21 @@ class EPaper(object):
         int(os.environ.get("SECONDARY_TIME_WARN_ABOVE_PERCENT", "50"))
     )
 
-    airly = Airly(
-        os.environ.get("AIRLY_KEY"),
-        os.environ.get("LAT"),
-        os.environ.get("LON"),
-        int(os.environ.get("AIRLY_TTL", "20"))
-    )
+    aqi = None
+    if os.environ.get("AIRLY_KEY"):
+        aqi = Airly(
+            os.environ.get("AIRLY_KEY"),
+            os.environ.get("LAT"),
+            os.environ.get("LON"),
+            int(os.environ.get("AIRLY_TTL", "20"))
+        )
+    else:
+        aqi = Aqicn(
+            os.environ.get("AQICN_KEY"),
+            os.environ.get("AQICN_CITY_OR_ID"),
+            int(os.environ.get("AQICN_TTL", "20"))
+        )
+
     weather = None
     if os.environ.get("OPENWEATHER_KEY"):
         weather = OpenWeather(
@@ -162,9 +172,9 @@ class EPaper(object):
         self.display_buffer(black_frame, red_frame, 'shutdown')
 
 
-    def display_airly_details(self):
-        black_frame, red_frame = self.drawing.draw_airly_details(self.airly.get())
-        self.display_buffer(black_frame, red_frame, 'airly')
+    def display_aqi_details(self):
+        black_frame, red_frame = self.drawing.draw_aqi_details(self.aqi.get())
+        self.display_buffer(black_frame, red_frame, 'aqi')
 
 
     def display_gmaps_details(self):
@@ -197,8 +207,8 @@ class EPaper(object):
             weather_data = self.weather.get()
             logging.info("--- weather: " + json.dumps(weather_data))
 
-            airly_data = self.airly.get()
-            logging.info("--- airly: " + json.dumps(airly_data))
+            aqi_data = self.aqi.get()
+            logging.info("--- aqi: " + json.dumps(aqi_data))
 
             gmaps1_data = self.gmaps1.get()
             logging.info("--- gmaps1: " + json.dumps(gmaps1_data))
@@ -213,7 +223,7 @@ class EPaper(object):
                 weather_data,
                 self.PREFER_AIRLY_LOCAL_TEMP,
                 self.WARN_PAINTED_BLACK_ON_RED,
-                airly_data,
+                aqi_data,
                 gmaps1_data,
                 gmaps2_data
             )
