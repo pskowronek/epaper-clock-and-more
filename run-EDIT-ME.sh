@@ -38,8 +38,8 @@ export AIRLY_KEY=GET_YOUR_OWN_KEY           # get the key from: https://develope
 export AQICN_KEY=GET_YOUR_OWN_KEY           # get the key from: https://aqicn.org/data-platform/token/
 
 
-# A key for weather forecasts from DarkSky.net API (deprecated)
-export DARKSKY_KEY=GET_YOUR_OWN_KEY         # get the key from: https://darksky.net/dev/register
+# A key for weather forecasts from DarkSky.net API (deprecated as is no longer possible to acquire new keys from DarkSky - existing keys should work until the end of 2021, https://blog.darksky.net/)
+export DARKSKY_KEY=GET_YOUR_OWN_KEY         # get the key from: https://darksky.net/dev/register - deprecated (pending removal in 2022)
 
 
 # Cache TTLs in minutes for each data fetcher (refer to free accounts limitations before you change the values any lower than 10m)
@@ -47,7 +47,7 @@ export GOOGLE_MAPS_TTL=10
 export AIRLY_TTL=20
 export AQICN_TTL=20
 export OPENWEATHER_TTL=15
-export DARKSKY_TTL=15                       # deprecated
+export DARKSKY_TTL=15                       # deprecated (pending removal in 2022)
 
 # AQICN City or ID (see: https://aqicn.org/search/) to use instead of LAT&LON coords, if you set it to 'here' then it is going to be based on IP geolocation
 #export AQICN_CITY_OR_ID=here
@@ -55,7 +55,7 @@ export DARKSKY_TTL=15                       # deprecated
 # Units
 export GOOGLE_MAPS_UNITS=metric             # refer to: https://developers.google.com/maps/documentation/distance-matrix/intro#unit_systems for allowed values (metric, imperial)
 export OPENWEATHER_UNITS=metric             # refer to: https://openweathermap.org/api/one-call-api#data for allowed values (metric, imperial, etc)
-export DARK_SKY_UNITS=si                    # refer to: https://darksky.net/dev/docs for allowed values (si, us, auto, etc) 
+export DARK_SKY_UNITS=si                    # refer to: https://darksky.net/dev/docs for allowed values (si, us, auto, etc) - deprecated (pending removal in 2022)
 
 # Warning levels
 export AQI_WARN_LEVEL=75                    # above this value the displayed gauge will become red (on supported displays)
