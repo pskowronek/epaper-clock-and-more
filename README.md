@@ -50,6 +50,9 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
 - install git: ```sudo apt install git```
 - issue the command to fetch this project: ```git clone https://github.com/pskowronek/epaper-clock-and-more.git```
 - go to the project directory: ```cd epaper-clock-and-more``` and install required python modules: ```pip install -r requirements.txt```
+  - if it fails then please try to analyze any error statements and follow instructions if provided
+  - the most common issue is Pillow's requirement regarding libjpeg - if it is the case then invoke ```sudo apt-get install libjpeg-dev ``` and retry pip install
+  - before you report a bug, try to google it first :)
 - rename run-EDIT-ME.sh to run.sh and edit run.sh to configure:
   - your home location (lon & lat)
   - two destinations to check traffic delays
@@ -61,10 +64,10 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
     - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider (see below)
   - a key for weather forecasts from DarkSky.net - ~~you can get it [here](https://darksky.net/dev/register)~~ *)
     - **DarkSky has been recently acquired by Apple since then no new submissions are being accepted**
-    - DarkSky is now in fallback mode (if not OpenWeather key is provided) and it's been set as deprecated (should work until the end of 2021)
+    - DarkSky is now in fallback mode (if no OpenWeather key is provided) and it's been set as deprecated (should work until the end of 2021)
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
     - alternatively you can use World Air Quality Index API - you can get it [here](https://aqicn.org/data-platform/token/) *)
-    - WAQI (aqicn.org) works as a fallback if you don't specify the token for Airly
+    - WAQI (aqicn.org) works as a fallback if you don't specify any token for Airly
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
   - tweak additional settings to:
     - prefer local temperature readings as served by Airly instead of weather provider(s)
