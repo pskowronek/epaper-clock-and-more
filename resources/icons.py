@@ -1,4 +1,4 @@
-openweathermap = {
+openweather = {
     "01d" : "28.bmp",
     "01n" : "29.bmp",
     "02d" : "30.bmp",

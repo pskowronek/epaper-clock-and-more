@@ -3,7 +3,9 @@
 # This script is to either:
 # - test and trial run epaper-clock-and-more manually
 # - be luanched by provided epaper.service (that must be registered under /etc/systemd - your mileage may vary depending what distribution you use)
-
+#
+# Please read README.md first to understand what is the meaning the variables below.
+#
 
 # WARNING WARNING WARNING
 # - rename run-EDIT-ME.sh to run.sh and comment out the following 2 lines and re-configure the environment variables below
@@ -27,23 +29,30 @@ export LON=20.0373204
 
 # A key for traffic delays from Google Maps Distance Matrix API
 export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://developers.google.com/maps/documentation/embed/get-api-key
-# A key for weather forecasts from DarkSky.net API
-export DARKSKY_KEY=GET_YOUR_OWN_KEY         # get the key from: https://darksky.net/dev/register
+# A key for weather forecasts from OpenWeatherMap One Call API
+export OPENWEATHERMAP_KEY=GET_YOUR_OWN_KEY  # get the key from: https://openweathermap.org/home/sign_up
 # A key for AQI (Air Quality Index) from AIRLY.EU API (data for certain countries only, as yet, but you may order their device to provide data also for your neighbours)
 export AIRLY_KEY=GET_YOUR_OWN_KEY           # get the key from: https://developer.airly.eu/register
 
+# A key for weather forecasts from DarkSky.net API (deprecated)
+export DARKSKY_KEY=GET_YOUR_OWN_KEY         # get the key from: https://darksky.net/dev/register
+
+
 # Cache TTLs in minutes for each data fetcher (refer to free accounts limitations before you change the values any lower than 10m)
 export GOOGLE_MAPS_TTL=10
-export DARKSKY_TTL=15
 export AIRLY_TTL=20
+export OPENWEATHERMAP_TTL=15
+export DARKSKY_TTL=15                       # deprecated
+
 
 # Units
 export GOOGLE_MAPS_UNITS=metric             # refer to: https://developers.google.com/maps/documentation/distance-matrix/intro#unit_systems for allowed values (metric, imperial)
-export DARK_SKY_UNITS=si                    # refer to: https://darksky.net/dev/docs for allowed values (si, us, auto, etc)
+export OPENWEATHERMAP_UNITS=metric          # refer to: https://openweathermap.org/api/one-call-api#data for allowed values (metric, imperial, etc)
+export DARK_SKY_UNITS=si                    # refer to: https://darksky.net/dev/docs for allowed values (si, us, auto, etc) 
 
 # Warning levels
 export AQI_WARN_LEVEL=75                    # above this value the displayed gauge will become red (on supported displays)
-export WEATHER_STORM_DISTANCE_WARN=10       # display warning if storm is closer than this value in km/miles (take a look at units above)
+export WEATHER_STORM_DISTANCE_WARN=10       # display warning if storm is closer than this value in km/miles (take a look at units above) - if supported by weather provider
 
 # Lat & lon of destination you want to calculate the current driving time including traffic
 export FIRST_TIME_TO_DESTINATION_LAT=49.9823219
@@ -67,7 +76,7 @@ export WARN_PAINTED_BLACK_ON_RED=false
 # Whether to draw two vertical dots to separate hours and minutes (to avoid confusion that a year is being displayed... yes, I know people who first thought that was a year displayed)
 export CLOCK_HRS_MINS_SEPARATOR=true
 
-# Whether to prefer Airly.eu local temperature if available instead of current temperature returned by DarkSky. Metric (Celsius) temperature only.
+# Whether to prefer Airly.eu local temperature if available instead of current temperature returned by weather provider. Metric (Celsius) temperature only.
 #export PREFER_AIRLY_LOCAL_TEMP=false
 
 # A type of EPAPER display you want to use - either Waveshare 4"2 (b&w) or 2"7 (tri-color) - this automatically sets EPAPER_MONO to "true" for 2"7 and to "false" for 4"2

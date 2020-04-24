@@ -57,7 +57,8 @@ class Airly(Acquire):
     def get(self):
         try:
             airly_data = self.load()
-            if airly_data is None:
+            if airly_data is None or not airly_data["current"] or not airly_data["current"]["values"]:
+                logging.warn("No reasonable data returned by Airly. Check API key (status code) or whether the location is supported")
                 return self.DEFAULT
 
             return AirlyTuple(

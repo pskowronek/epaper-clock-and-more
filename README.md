@@ -11,9 +11,10 @@ This is a forked project of [waveshare-clock](https://github.com/prehensile/wave
 This project enhances the original project to support Waveshare 2.7inch displays with red dye (BWR) and adds the following additional features:
 - gauges for current traffic drive times for two configured destinations (thanks to [Google Maps API](https://developers.google.com/maps/documentation/))
 - gauge for air quality index (AQI) of home location (thanks to [Airly.eu API](http://developer.airly.eu/))
-- weather gauge may display:
-  - alerts issued by governmental authorities - it works for the EU, US & Canada (thanks to [DarkSky.net API](https://darksky.net/dev/docs))
-  - warning about storms in defined vicinity (thanks to [DarkSky.net API](https://darksky.net/dev/docs))
+- weather gauge can display:
+  - current temperature + weather status icon plus forecast: daily min/max temperatures (thanks to [OpenWeather API](https://openweathermap.org))
+  - ~~alerts issued by governmental authorities - it works for the EU, US & Canada (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~ DarkSky is being phased out - see below
+  - ~~warning about storms in defined vicinity (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~
 - buttons support to display detailed information about: weather, air quality, traffic and system information (on supported devices, i.e. 2.7inch HUT with switches)
 - font with relaxed license already included in the project
 
@@ -56,12 +57,15 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
     - it is wise to read Google Maps [documentation](https://developers.google.com/maps/documentation/)
     - tl;dr: basically you have to enable Distance Matrix API - follow [these](https://developers.google.com/maps/documentation/distance-matrix/start#authentication) instructions,
       then you have to enable billing for it - just go [there](https://console.cloud.google.com/billing) - don't worry, they won't charge you if you are below the limits
-  - a key for weather forecast from DarkSky.net - ~~you can get it [here](https://darksky.net/dev/register)~~ *)
-    - **DarkSky has been recently acquired by Apple since then no new submissions are being accepted** - WiP for an alternative vendor [#4](https://github.com/pskowronek/epaper-clock-and-more/issues/4)
+  - a key for weather forecasts from OpenWeather - you can get it [here](https://openweathermap.org/home/sign_up) *)
+    - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider (see below)
+  - a key for weather forecasts from DarkSky.net - ~~you can get it [here](https://darksky.net/dev/register)~~ *)
+    - **DarkSky has been recently acquired by Apple since then no new submissions are being accepted**
+    - DarkSky is now in fallback mode (if not OpenWeather key is provided) and it's been set as deprecated (should work until the end of 2021)
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
   - tweak additional settings to:
-    - prefer local temperature readings as served by Airly instead of DarkSky
+    - prefer local temperature readings as served by Airly instead of weather provider(s)
     - display warnings using black font instead of white on red canvas (more readable if red dye faded out)
     - switch 2.7 BWR into BW
     - turn off displaying hours & minutes separator

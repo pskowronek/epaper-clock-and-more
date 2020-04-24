@@ -8,7 +8,8 @@ from PIL import Image
 
 from drawing import Drawing
 from providers.airly import Airly
-from providers.weather import Weather
+from providers.darksky import DarkSky
+from providers.openweather import OpenWeather
 from providers.gmaps import GMaps
 from providers.system_info import SystemInfo
 
@@ -60,13 +61,25 @@ class EPaper(object):
         os.environ.get("LON"),
         int(os.environ.get("AIRLY_TTL", "20"))
     )
-    weather = Weather(
-        os.environ.get("DARKSKY_KEY"),
-        os.environ.get("LAT"),
-        os.environ.get("LON"),
-        os.environ.get("DARKSKY_UNITS", "si"),
-        int(os.environ.get("DARKSKY_TTL", "15"))
-    )
+    weather = None
+    if os.environ.get("OPENWEATHER_KEY"):
+        weather = OpenWeather(
+            os.environ.get("OPENWEATHER_KEY"),
+            os.environ.get("LAT"),
+            os.environ.get("LON"),
+            os.environ.get("OPENWEATHER_UNITS", "metric"),
+            int(os.environ.get("OPENWEATHER_TTL", "15"))
+        )
+    else:
+        weather = DarkSky(
+            os.environ.get("DARKSKY_KEY"),
+            os.environ.get("LAT"),
+            os.environ.get("LON"),
+            os.environ.get("DARKSKY_UNITS", "si"),
+            int(os.environ.get("DARKSKY_TTL", "15"))
+        )
+
+
     gmaps1 = GMaps(
         os.environ.get("GOOGLE_MAPS_KEY"),
         os.environ.get("LAT"),

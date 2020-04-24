@@ -4,6 +4,7 @@
 # Modifications: https://github.com/pskowronek/epaper-clock-and-more, Apache 2 license
 
 from PIL import Image, ImageDraw, ImageFont
+import logging
 import textwrap
 
 from resources import icons
@@ -70,7 +71,10 @@ class Drawing(object):
         back = Image.open('./resources/images/back.bmp')
         buf.paste(back, start_pos)
 
-        icon = icons.darksky.get(weather.icon, None)
+        icon = icons.openweather.get(weather.icon, None)
+        if icon is None:
+            icon = icons.darksky.get(weather.icon, None)
+
         if icon is not None:
             self.draw_weather_icon(
                 buf,
@@ -253,7 +257,8 @@ class Drawing(object):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         draw = ImageDraw.Draw(black_buf)
-        self.draw_text(10, 10, "Weather by DarkSky.net", 35, draw)
+        provider = 'OpenWeather' if 'providers.openweather.Weather' in str(type(weather)) else 'DarkSky (legacy)'
+        self.draw_text(10, 10, "Weather by {}".format(provider), 32, draw)
 
         self.draw_text(10, 65, "Temperature: {}{}".format(weather.temp, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
         self.draw_text(10, 95, "Daily min: {}{}, max: {}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL.encode('utf-8'), weather.temp_max, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
