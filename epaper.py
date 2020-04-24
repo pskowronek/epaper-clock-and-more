@@ -67,6 +67,8 @@ class EPaper(object):
     else:
         aqi = Aqicn(
             os.environ.get("AQICN_KEY"),
+            os.environ.get("LAT"),
+            os.environ.get("LON"),
             os.environ.get("AQICN_CITY_OR_ID"),
             int(os.environ.get("AQICN_TTL", "20"))
         )

@@ -33,7 +33,8 @@ export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://develope
 export OPENWEATHER_KEY=GET_YOUR_OWN_KEY  # get the key from: https://openweathermap.org/home/sign_up
 # A key for AQI (Air Quality Index) from AIRLY.EU API (data for certain countries only, as yet, but you may order their device to provide data also for your neighbours)
 export AIRLY_KEY=GET_YOUR_OWN_KEY           # get the key from: https://developer.airly.eu/register
-# A key for AQI (Air Quality Index) from AQICN API (data for cities across the world) - used as a fallback if Airly key above is not defined. Please also specify AQICN_CITY_OR_ID below.
+# A key for AQI (Air Quality Index) from AQICN API (data for cities across the world) - used as a fallback if Airly key above is not defined.
+# See AQICN_CITY_OR_ID below to optionally specify city instead of lat&lon as above, or to use IP based geolocation.
 export AQICN_KEY=GET_YOUR_OWN_KEY           # get the key from: https://aqicn.org/data-platform/token/
 
 
@@ -48,8 +49,8 @@ export AQICN_TTL=20
 export OPENWEATHER_TTL=15
 export DARKSKY_TTL=15                       # deprecated
 
-# AQICN City or ID (see: https://aqicn.org/search/)
-export AQICN_CITY_OR_ID=krakow
+# AQICN City or ID (see: https://aqicn.org/search/) to use instead of LAT&LON coords, if you set it to 'here' then it is going to be based on IP geolocation
+#export AQICN_CITY_OR_ID=here
 
 # Units
 export GOOGLE_MAPS_UNITS=metric             # refer to: https://developers.google.com/maps/documentation/distance-matrix/intro#unit_systems for allowed values (metric, imperial)

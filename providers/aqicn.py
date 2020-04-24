@@ -16,8 +16,10 @@ class Aqicn(Acquire):
     DEFAULT = AqicnTuple(pm25=-1, pm10=-1, pressure=-1, hummidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
 
 
-    def __init__(self, key, city_or_id, cache_ttl):
+    def __init__(self, key, lat, lon, city_or_id, cache_ttl):
         self.key = key
+        self.lat = lat
+        self.lon = lon
         self.city_or_id = city_or_id
         self.cache_ttl = cache_ttl
 
@@ -36,7 +38,7 @@ class Aqicn(Acquire):
         try:
             r = requests.get(
                 "https://api.waqi.info/feed/{}/?token={}".format(
-                    self.city_or_id,
+                    self.city_or_id if self.city_or_id else "geo:{};{}".format(self.lat, self.lon),
                     self.key
                 )
             )
@@ -51,15 +53,15 @@ class Aqicn(Acquire):
         try:
             aqicn_data = self.load()
             if aqicn_data is None or aqicn_data["status"] != 'ok':
-                logging.warn("No reasonable data returned by Aqicn. Check API key (status code) or whether the city or id is known by the service (visit: https://aqicn.org/search/)")
+                logging.warn("No reasonable data returned by Aqicn. Check API key (status code) or whether the given city/id/lon&lat is known and handled by the service (visit: https://aqicn.org/search/)")
                 return self.DEFAULT
 
             return AqicnTuple(
-                pm25=aqicn_data["data"]["iaqi"]["pm25"]["v"],
-                pm10=-1,
-                pressure=-1,
-                hummidity=-1,
-                temperature=None,
+                pm25=aqicn_data["data"]["iaqi"]["pm25"]["v"] if aqicn_data["data"]["iaqi"]["pm25"] else -1,
+                pm10=aqicn_data["data"]["iaqi"]["pm10"]["v"] if aqicn_data["data"]["iaqi"]["pm10"] else -1,
+                pressure=aqicn_data["data"]["iaqi"]["p"]["v"] if aqicn_data["data"]["iaqi"]["p"] else -1,
+                hummidity=aqicn_data["data"]["iaqi"]["h"]["v"] if aqicn_data["data"]["iaqi"]["h"] else -1,
+                temperature=aqicn_data["data"]["iaqi"]["t"]["v"] if aqicn_data["data"]["iaqi"]["t"] else None,
                 aqi=aqicn_data["data"]["aqi"],
                 level=None,
                 advice=None
