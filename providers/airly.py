@@ -8,13 +8,13 @@ import requests
 from collections import namedtuple
 
 
-AirlyTuple = namedtuple('Airly', ['pm25', 'pm10', 'hummidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
+AirlyTuple = namedtuple('Airly', ['pm25', 'pm10', 'humidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
 
 
 class Airly(Acquire):
 
 
-    DEFAULT = AirlyTuple(pm25=-1, pm10=-1, pressure=-1, hummidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
+    DEFAULT = AirlyTuple(pm25=-1, pm10=-1, pressure=-1, humidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
 
 
     def __init__(self, key, lat, lon, cache_ttl):
@@ -57,7 +57,7 @@ class Airly(Acquire):
     def get(self):
         try:
             airly_data = self.load()
-            if airly_data is None or not airly_data["current"] or not airly_data["current"]["values"]:
+            if airly_data is None or 'current' not in airly_data or 'values' not in airly_data["current"] or not airly_data["current"]["values"] or not airly_data["current"]["indexes"]:
                 logging.warn("No reasonable data returned by Airly. Check API key (status code) or whether the location has any sensors around (visit: https://airly.eu/map/en/)")
                 return self.DEFAULT
 
@@ -65,7 +65,7 @@ class Airly(Acquire):
                 pm25=airly_data["current"]["values"][1]['value'],
                 pm10=airly_data["current"]["values"][2]['value'],
                 pressure=airly_data["current"]["values"][3]['value'],
-                hummidity=airly_data["current"]["values"][4]['value'],
+                humidity=airly_data["current"]["values"][4]['value'],
                 temperature=airly_data["current"]["values"][5]['value'],
                 aqi=airly_data["current"]["indexes"][0]['value'],
                 level=airly_data["current"]["indexes"][0]['level'],

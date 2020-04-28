@@ -29,7 +29,7 @@ class Acquire(object):
     def load_cached(self):
         fn_cache = self.cache_path()
         if os.path.exists(fn_cache):
-            logging.info("load cache file: %s" % fn_cache)
+            logging.info("Loading cache file: %s %s" % (fn_cache, str(type(self))))
             with open(fn_cache) as fp:
                 return json.load(fp)
 
@@ -78,7 +78,7 @@ class Acquire(object):
 
         # no data has been cached yet
         if acquired_data is None:
-            logging.info("No cache found - acquiring data...")
+            logging.info("No cache found - acquiring data... %s" % str(type(self)))
             acquired_data = self.load_and_cache()
         else:
             # get last modified time for cache...

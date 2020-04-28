@@ -222,8 +222,8 @@ class Drawing(object):
         self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(aqi.aqi, aqi.level.replace('_', ' ').encode('utf-8') if aqi.level else 'N/A'), 30, draw)
         if aqi.advice:
             y = self.draw_multiline_text(10, y, "Advice: {}".format(aqi.advice.encode('utf-8')) if aqi.advice else 'N/A', 25, draw)
-        if aqi.hummidity != -1:
-            y = self.draw_text(10, y, "Hummidity: {} %".format(aqi.hummidity), 30, draw)
+        if aqi.humidity != -1:
+            y = self.draw_text(10, y, "Humidity: {} %".format(aqi.humidity), 30, draw)
         if aqi.pressure != -1:
             y = self.draw_text(10, y, "Pressure:  {} hPa".format(aqi.pressure), 30, draw)
         if aqi.temperature:

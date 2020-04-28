@@ -70,9 +70,9 @@ class OpenWeather(Acquire):
                 temp=c['temp'],
                 temp_min=temp_min,
                 temp_max=temp_max,
-                icon=c['weather'][0]['icon'] if c['weather'] else None,
-                summary=c['weather'][0]['main'] if d['weather'] else None,
-                forecast_summary=d['weather'][0]['description'] if d['weather'] else None,
+                icon=c['weather'][0]['icon'] if 'weather' in c else None,
+                summary=c['weather'][0]['main'] if 'weather' in c else None,
+                forecast_summary=d['weather'][0]['description'] if 'weather' in d else None,
                 nearest_storm_distance=None,    # Unsupported by this provider yet
                 alert_title=None,               # Unsupported by this provider yet
                 alert_description=None          # Unsupported by this provider yet
