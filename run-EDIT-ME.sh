@@ -24,8 +24,8 @@ exit 1
 #export EPAPER_FAST_REFRESH=true
 
 # Lat & lon of your home (a base point)
-export LAT=50.0720519
-export LON=20.0373204
+export LAT=50.0618971 # using Rynek Główny @ KRK, as Plac Centralny doesn't temporarily work properly with Airly (#6) 50.0720519
+export LON=19.9345672 # 20.0373204
 
 # A key for traffic delays from Google Maps Distance Matrix API
 export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://developers.google.com/maps/documentation/embed/get-api-key
