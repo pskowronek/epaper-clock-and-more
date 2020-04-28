@@ -9,13 +9,13 @@ import logging
 from collections import namedtuple
 
 
-SystemTuple = namedtuple('SystemInfo', ['uptime', 'cpu_usage', 'mem_usage', 'free_disk'])
+SystemTuple = namedtuple('SystemInfo', ['provider', 'uptime', 'cpu_usage', 'mem_usage', 'free_disk'])
 
 
 class SystemInfo(Acquire):
 
 
-    DEFAULT = SystemTuple(uptime="n/a", cpu_usage="n/a", mem_usage="n/a", free_disk="n/a")
+    DEFAULT = SystemTuple(provider='System', uptime="n/a", cpu_usage="n/a", mem_usage="n/a", free_disk="n/a")
 
 
     def __init__(self, cache_ttl = -1):
@@ -33,6 +33,7 @@ class SystemInfo(Acquire):
     def get(self):
         try:
             return SystemTuple(
+                provider='System',
                 uptime="{:0.0f} days".format(uptime() / (3600 * 24)),
                 cpu_usage="{} %".format(psutil.cpu_percent()),
                 mem_usage="{} %".format(psutil.virtual_memory().percent),

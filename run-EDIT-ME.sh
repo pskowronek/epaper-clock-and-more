@@ -29,10 +29,15 @@ export LON=19.9345672 # 20.0373204
 
 # A key for traffic delays from Google Maps Distance Matrix API
 export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://developers.google.com/maps/documentation/embed/get-api-key
+
 # A key for weather forecasts from OpenWeather One Call API
 export OPENWEATHER_KEY=GET_YOUR_OWN_KEY  # get the key from: https://openweathermap.org/home/sign_up
+# A key for weather forecasts + alerts from Weatherbit.io API
+export WEATHERBIT_IO_KEY=41a107b9fbe748bc9ea2de762cc57b50   # get the key from: https://www.weatherbit.io/account/create
+
 # A key for AQI (Air Quality Index) from AIRLY.EU API (data for certain countries only, as yet, but you may order their device to provide data also for your neighbours)
 export AIRLY_KEY=GET_YOUR_OWN_KEY           # get the key from: https://developer.airly.eu/register
+
 # A key for AQI (Air Quality Index) from AQICN API (data for cities across the world) - used as a fallback if Airly key above is not defined.
 # See AQICN_CITY_OR_ID below to optionally specify city instead of lat&lon as above, or to use IP based geolocation.
 export AQICN_KEY=GET_YOUR_OWN_KEY           # get the key from: https://aqicn.org/data-platform/token/
@@ -47,6 +52,7 @@ export GOOGLE_MAPS_TTL=10
 export AIRLY_TTL=20
 export AQICN_TTL=20
 export OPENWEATHER_TTL=15
+export WEATHERBIT_IO_TTL=15
 export DARKSKY_TTL=15                       # deprecated (pending removal in 2022)
 
 # AQICN City or ID (see: https://aqicn.org/search/) to use instead of LAT&LON coords, if you set it to 'here' then it is going to be based on IP geolocation
@@ -55,6 +61,7 @@ export DARKSKY_TTL=15                       # deprecated (pending removal in 202
 # Units
 export GOOGLE_MAPS_UNITS=metric             # refer to: https://developers.google.com/maps/documentation/distance-matrix/intro#unit_systems for allowed values (metric, imperial)
 export OPENWEATHER_UNITS=metric             # refer to: https://openweathermap.org/api/one-call-api#data for allowed values (metric, imperial, etc)
+export WEATHERBIT_IO_UNITS=M                # refer to: https://www.weatherbit.io/api/weather-current for allowed values (M, I, S)
 export DARK_SKY_UNITS=si                    # refer to: https://darksky.net/dev/docs for allowed values (si, us, auto, etc) - deprecated (pending removal in 2022)
 
 # Warning levels

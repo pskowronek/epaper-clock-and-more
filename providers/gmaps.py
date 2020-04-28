@@ -3,18 +3,19 @@
 
 from acquire import Acquire
 
+import json
 import logging
 import requests
 from collections import namedtuple
 
 
-GMapsTuple = namedtuple('Gmaps', ['time_to_dest', 'time_to_dest_in_traffic', 'distance', 'origin_address', 'destination_address' ])
+GMapsTuple = namedtuple('Gmaps', ['provider', 'time_to_dest', 'time_to_dest_in_traffic', 'distance', 'origin_address', 'destination_address' ])
 
 
 class GMaps(Acquire):
 
 
-    DEFAULT = GMapsTuple(time_to_dest=-1, time_to_dest_in_traffic=-1, distance=-1, origin_address='n/a', destination_address='n/a')    
+    DEFAULT = GMapsTuple(provider='Google Maps', time_to_dest=-1, time_to_dest_in_traffic=-1, distance=-1, origin_address='n/a', destination_address='n/a')    
 
 
     def __init__(self, key, home_lat, home_lon, dest_lat, dest_lon, units, name, cache_ttl):
@@ -36,17 +37,16 @@ class GMaps(Acquire):
         return self.cache_ttl
 
 
-    def error_found(self, response):
+    def error_found(self, status_code, response_text):
         result = False
-        if super(GMaps, self).error_found(response):
+        if super(GMaps, self).error_found(status_code, response_text):
             result = True
         else:
-            json = response.json()
-            text = response.text.encode('utf-8')
-            if 'error_message' in json:
+            response_parsed = json.loads(response_text)
+            if 'error_message' in response_parsed:
                 logging.warn("GMaps API returned the following error: %s" % json['error_message'])
                 result = True
-            elif 'duration_in_traffic' not in text:
+            elif 'duration_in_traffic' not in response_text:
                 logging.warn("GMaps API returned no 'duration_in_traffic' data - probably empty or wrong api key /what a strange API that is/")
                 result = True
 
@@ -67,11 +67,11 @@ class GMaps(Acquire):
                     self.key
                 ),
             )
-            return r
+            return r.status_code, r.text
         except Exception as e:
             logging.exception(e)
 
-        return None
+        return (None, None)
 
 
     def get(self):
@@ -81,6 +81,7 @@ class GMaps(Acquire):
                 return self.DEFAULT
 
             return GMapsTuple(
+                provider='Google Maps',
                 time_to_dest=gmaps_data['rows'][0]['elements'][0]['duration']['value'],  # in seconds
                 time_to_dest_in_traffic=gmaps_data['rows'][0]['elements'][0]['duration_in_traffic']['value'],  # in seconds
                 distance=gmaps_data['rows'][0]['elements'][0]['distance']['text'],  # in km, string with km

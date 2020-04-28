@@ -9,13 +9,13 @@ import requests
 from collections import namedtuple
 
 
-DarkSkyTuple = namedtuple('DarkSky', ['temp', 'temp_min', 'temp_max', 'icon', 'summary', 'forecast_summary', 'nearest_storm_distance', 'alert_title', 'alert_description'])
+DarkSkyTuple = namedtuple('DarkSky', ['provider', 'temp', 'temp_min', 'temp_max', 'icon', 'summary', 'forecast_summary', 'nearest_storm_distance', 'alert_title', 'alert_description'])
 
 
 class DarkSky(Acquire):
 
 
-    DEFAULT = DarkSkyTuple(temp=-99, temp_min=-99, temp_max=-99, icon='n/a', summary='n/a',
+    DEFAULT = DarkSkyTuple(provider='DarkSky.net', temp=-99, temp_min=-99, temp_max=-99, icon='n/a', summary='n/a',
                            forecast_summary='n/a', nearest_storm_distance=None, alert_title=None, alert_description=None)
 
 
@@ -50,12 +50,12 @@ class DarkSky(Acquire):
                     "exclude" : "minutely,hourly,flags"
                 }
             )
-            return r
+            return r.status_code, r.text
 
         except Exception as e:
             logging.exception(e)
 
-        return None
+        return (None, None)
 
 
     def get(self):
@@ -73,6 +73,7 @@ class DarkSky(Acquire):
             a = forecast_data.get('alerts', None)
 
             return DarkSkyTuple(
+                provider='DarkSky.net',
                 temp=c['temperature'],
                 temp_min=temp_min,
                 temp_max=temp_max,

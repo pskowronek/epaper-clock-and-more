@@ -12,7 +12,7 @@ This project enhances the original project to support Waveshare 2.7inch displays
 - gauges for current traffic drive times for two configured destinations (thanks to [Google Maps API](https://developers.google.com/maps/documentation/))
 - gauge for air quality index (AQI) of home location (thanks to [Airly.eu API](http://developer.airly.eu/) or [World Air Quality Index API](https://aqicn.org))
 - weather gauge can display:
-  - current temperature + weather status icon plus forecast: daily min/max temperatures (thanks to [OpenWeather API](https://openweathermap.org))
+  - current temperature + weather status icon plus forecast: daily min/max temperatures (thanks to [OpenWeather API](https://openweathermap.org) & [Weatherbit.io](https://weatherbit.io))
   - ~~alerts issued by governmental authorities - it works for the EU, US & Canada (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~ DarkSky is being phased out - see below
   - ~~warning about storms in defined vicinity (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~
 - buttons support to display detailed information about: weather, air quality, traffic and system information (on supported devices, i.e. 2.7inch HUT with switches)
@@ -60,11 +60,13 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
     - it is wise to read Google Maps [documentation](https://developers.google.com/maps/documentation/)
     - tl;dr: basically you have to enable Distance Matrix API - follow [these](https://developers.google.com/maps/documentation/distance-matrix/start#authentication) instructions,
       then you have to enable billing for it - just go [there](https://console.cloud.google.com/billing) - don't worry, they won't charge you if you are below the limits
-  - a key for weather forecasts from OpenWeather - you can get it [here](https://openweathermap.org/home/sign_up) *)
+  - a key for weather forecasts from OpenWeather - you can get it [here](https://openweathermap.org/home/sign_up) or *)
     - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider (see below)
+  - a key for weather forecasts from Weatherbit.io - you can get it [here](https://www.weatherbit.io/account/create) *)
+    - alternative weather forecasts provider
   - a key for weather forecasts from DarkSky.net - ~~you can get it [here](https://darksky.net/dev/register)~~ *)
     - **DarkSky has been recently acquired by Apple since then no new submissions are being accepted**
-    - DarkSky is now in fallback mode (if no OpenWeather key is provided) and it's been set as deprecated (should work until the end of 2021)
+    - DarkSky is now in fallback mode (if no OpenWeather or Weatherbit.io key is provided) - it's been set as deprecated (should work until the end of 2021)
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
     - alternatively you can use World Air Quality Index API - you can get it [here](https://aqicn.org/data-platform/token/) *)
     - WAQI (aqicn.org) works as a fallback if you don't specify any token for Airly

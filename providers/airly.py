@@ -8,13 +8,13 @@ import requests
 from collections import namedtuple
 
 
-AirlyTuple = namedtuple('Airly', ['pm25', 'pm10', 'humidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
+AirlyTuple = namedtuple('Airly', ['provider', 'pm25', 'pm10', 'humidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
 
 
 class Airly(Acquire):
 
 
-    DEFAULT = AirlyTuple(pm25=-1, pm10=-1, pressure=-1, humidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
+    DEFAULT = AirlyTuple(provider='Airly', pm25=-1, pm10=-1, pressure=-1, humidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
 
 
     def __init__(self, key, lat, lon, cache_ttl):
@@ -47,11 +47,11 @@ class Airly(Acquire):
                     "Accept" : "application/json"
                 }
             )
-            return r
+            return r.status_code, r.text
         except Exception as e:
             logging.exception(e)
 
-        return None
+        return (None, None)
 
 
     def get(self):
@@ -62,6 +62,7 @@ class Airly(Acquire):
                 return self.DEFAULT
 
             return AirlyTuple(
+                provider='Airly',
                 pm25=airly_data["current"]["values"][1]['value'],
                 pm10=airly_data["current"]["values"][2]['value'],
                 pressure=airly_data["current"]["values"][3]['value'],

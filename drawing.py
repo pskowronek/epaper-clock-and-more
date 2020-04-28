@@ -70,9 +70,7 @@ class Drawing(object):
         back = Image.open('./resources/images/back.bmp')
         buf.paste(back, start_pos)
 
-        icon = icons.openweather.get(weather.icon, None)
-        if icon is None:
-            icon = icons.darksky.get(weather.icon, None)
+        icon = icons.weather_icons.get(weather.icon, None)
 
         if icon is not None:
             self.draw_weather_icon(
@@ -215,11 +213,11 @@ class Drawing(object):
         red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         draw = ImageDraw.Draw(black_buf)
 
-        provider = 'Airly.eu' if 'providers.airly.Airly' in str(type(aqi)) else 'AQICN'
+        provider = aqi.provider
         self.draw_text(10, 10, "Air Quality Index by {}".format(provider), 35, draw)
 
         y = self.draw_text(10, 60, "PM2.5: {:0.0f}, PM10: {:0.0f} ({})".format(aqi.pm25, aqi.pm10, self.PM_SYMBOL.encode('utf-8')), 30, draw)
-        self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(aqi.aqi, aqi.level.replace('_', ' ').encode('utf-8') if aqi.level else 'N/A'), 30, draw)
+        y = self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(aqi.aqi, aqi.level.replace('_', ' ').encode('utf-8') if aqi.level else 'N/A'), 30, draw)
         if aqi.advice:
             y = self.draw_multiline_text(10, y, "Advice: {}".format(aqi.advice.encode('utf-8')) if aqi.advice else 'N/A', 25, draw)
         if aqi.humidity != -1:
@@ -236,7 +234,7 @@ class Drawing(object):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         draw = ImageDraw.Draw(black_buf)
-        self.draw_text(10, 10, "Traffic info by Google", 35, draw)
+        self.draw_text(10, 10, "Traffic info by {}".format(gmaps1.provider), 35, draw)
 
         y = self.draw_multiline_text(10, 50, "From: {}".format(self.trim_address(gmaps1.origin_address).encode('utf-8')), 25, draw)
         y += 5
@@ -262,7 +260,7 @@ class Drawing(object):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         draw = ImageDraw.Draw(black_buf)
-        provider = 'OpenWeather' if 'providers.openweather.Weather' in str(type(weather)) else 'DarkSky (legacy)'
+        provider = weather.provider
         self.draw_text(10, 10, "Weather by {}".format(provider), 32, draw)
 
         self.draw_text(10, 65, "Temperature: {}{}".format(weather.temp, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)

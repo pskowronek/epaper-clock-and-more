@@ -47,13 +47,13 @@ class Acquire(object):
         pass
 
 
-    def error_found(self, response):
+    def error_found(self, status_code, response_text):
         result = False
-        if (response.status_code in [401, 403] ):
-            logging.warn("Remote server returned: %d - probably wrong API key" % response.status_code)
+        if (status_code in [401, 403] ):
+            logging.warn("Remote server returned: %d - probably wrong API key" % status_code)
             result = True
-        elif (response.status_code != 200):
-            logging.warn("Remote server returned unexpected status code: %d" % response.status_code)
+        elif (status_code != 200):
+            logging.warn("Remote server returned unexpected status code: %d" % status_code)
             result = True
 
         return result
@@ -61,14 +61,14 @@ class Acquire(object):
 
     def load_and_cache(self):
         acquired_data = None
-        acquired_response = self.acquire()
-        if acquired_response is not None:
-            if not self.error_found(acquired_response):
-                acquired_data = acquired_response.json()
+        status_code, response_text = self.acquire()
+        if status_code is not None:
+            if not self.error_found(status_code, response_text):
+                acquired_data = json.loads(response_text)
                 # write just acquired data to cache
                 fn_cache = self.cache_path()
                 with open(fn_cache,'wb') as fp:
-                    fp.write( acquired_response.text.encode('utf-8'))
+                    fp.write(response_text.encode('utf-8'))
         return acquired_data
 
 

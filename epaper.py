@@ -9,8 +9,10 @@ from PIL import Image
 from drawing import Drawing
 from providers.airly import Airly
 from providers.aqicn import Aqicn
-from providers.darksky import DarkSky
 from providers.openweather import OpenWeather
+from providers.weatherbit import Weatherbit
+from providers.darksky import DarkSky
+
 from providers.gmaps import GMaps
 from providers.system_info import SystemInfo
 
@@ -81,6 +83,14 @@ class EPaper(object):
             os.environ.get("LON"),
             os.environ.get("OPENWEATHER_UNITS", "metric"),
             int(os.environ.get("OPENWEATHER_TTL", "15"))
+        )
+    elif os.environ.get("WEATHERBIT_IO_KEY"):
+        weather = Weatherbit(
+            os.environ.get("WEATHERBIT_IO_KEY"),
+            os.environ.get("LAT"),
+            os.environ.get("LON"),
+            os.environ.get("WEATHERBIT_IO_UNITS", "M"),
+            int(os.environ.get("WEATHERBIT_IO_TTL", "15"))
         )
     else:
         weather = DarkSky(

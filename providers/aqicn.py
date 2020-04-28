@@ -7,13 +7,13 @@ import requests
 from collections import namedtuple
 
 
-AqicnTuple = namedtuple('Aqicn', ['pm25', 'pm10', 'humidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
+AqicnTuple = namedtuple('Aqicn', ['provider', 'pm25', 'pm10', 'humidity', 'pressure', 'temperature', 'aqi', 'level', 'advice'])
 
 
 class Aqicn(Acquire):
 
 
-    DEFAULT = AqicnTuple(pm25=-1, pm10=-1, pressure=-1, humidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
+    DEFAULT = AqicnTuple(provider='AQICN', pm25=-1, pm10=-1, pressure=-1, humidity=-1, temperature=None, aqi=-1, level='n/a', advice='n/a')
 
 
     def __init__(self, key, lat, lon, city_or_id, cache_ttl):
@@ -42,11 +42,11 @@ class Aqicn(Acquire):
                     self.key
                 )
             )
-            return r
+            return r.status_code, r.text
         except Exception as e:
             logging.exception(e)
 
-        return None
+        return (None, None)
 
 
     def get(self):
@@ -57,6 +57,7 @@ class Aqicn(Acquire):
                 return self.DEFAULT
 
             return AqicnTuple(
+                provider='AQICN',
                 pm25=aqicn_data["data"]["iaqi"]["pm25"]["v"] if 'pm25' in aqicn_data["data"]["iaqi"] else -1,
                 pm10=aqicn_data["data"]["iaqi"]["pm10"]["v"] if 'pm10' in aqicn_data["data"]["iaqi"] else -1,
                 pressure=aqicn_data["data"]["iaqi"]["p"]["v"] if 'p' in aqicn_data["data"]["iaqi"] else -1,

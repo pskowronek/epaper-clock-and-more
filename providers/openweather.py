@@ -6,13 +6,13 @@ import requests
 from collections import namedtuple
 
 
-OpenWeatherTuple = namedtuple('Weather', ['temp', 'temp_min', 'temp_max', 'icon', 'summary', 'forecast_summary', 'nearest_storm_distance', 'alert_title', 'alert_description'])
+OpenWeatherTuple = namedtuple('Weather', ['provider', 'temp', 'temp_min', 'temp_max', 'icon', 'summary', 'forecast_summary', 'nearest_storm_distance', 'alert_title', 'alert_description'])
 
 
 class OpenWeather(Acquire):
 
 
-    DEFAULT = OpenWeatherTuple(temp=-99, temp_min=-99, temp_max=-99, icon='n/a', summary='n/a',
+    DEFAULT = OpenWeatherTuple(provider='OpenWeather', temp=-99, temp_min=-99, temp_max=-99, icon='n/a', summary='n/a',
                                forecast_summary='n/a', nearest_storm_distance=None, alert_title=None, alert_description=None)
 
 
@@ -45,12 +45,12 @@ class OpenWeather(Acquire):
                     "units" : self.units
                 }
             )
-            return r
+            return r.status_code, r.text
 
         except Exception as e:
             logging.exception(e)
 
-        return None
+        return (None, None)
 
 
     def get(self):
@@ -67,6 +67,7 @@ class OpenWeather(Acquire):
             c = forecast_data['current']
 
             return OpenWeatherTuple(
+                provider='OpenWeather',
                 temp=c['temp'],
                 temp_min=temp_min,
                 temp_max=temp_max,
