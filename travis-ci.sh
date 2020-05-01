@@ -22,9 +22,9 @@ export LON=19.9345672 # 20.0373204
 export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://developers.google.com/maps/documentation/embed/get-api-key
 
 # A key for weather forecasts from OpenWeather One Call API
-export OPENWEATHER_KEY=GET_YOUR_OWN_KEY  # get the key from: https://openweathermap.org/home/sign_up
+export OPENWEATHER_KEY=GET_YOUR_OWN_KEY     # get the key from: https://openweathermap.org/home/sign_up
 # A key for weather forecasts + alerts from Weatherbit.io API
-export WEATHERBIT_IO_KEY=41a107b9fbe748bc9ea2de762cc57b50   # get the key from: https://www.weatherbit.io/account/create
+export WEATHERBIT_IO_KEY=GET_YOUR_OWN_KEY   # get the key from: https://www.weatherbit.io/account/create
 
 # A key for AQI (Air Quality Index) from AIRLY.EU API (data for certain countries only, as yet, but you may order their device to provide data also for your neighbours)
 export AIRLY_KEY=GET_YOUR_OWN_KEY           # get the key from: https://developer.airly.eu/register
