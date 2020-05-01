@@ -33,5 +33,5 @@ psutil == 5.4.7
 # system_info.py
 uptime == 3.0.1
 
-# providers/meteoalarm.py: 6                                                                                                                                                 
+# providers/meteoalarm.py: 6
 meteoalertapi == 0.1.6 
