@@ -1,22 +1,11 @@
 #!/bin/bash
 
-# This script is to either:
-# - test and trial run epaper-clock-and-more manually
-# - be luanched by provided epaper.service (that must be registered under /etc/systemd - your mileage may vary depending what distribution you use)
-#
-# Please read README.md first to understand what is the meaning the variables below.
-#
+# TRAVIS CI script - don't use it for "production" - it is only to run sanity check on travis-ci.org
 
-# WARNING WARNING WARNING
-# - rename run-EDIT-ME.sh to run.sh and comment out the following 2 lines and re-configure the environment variables below
-echo "Please edit and configure this script for your needs"
-exit 1
+export EPAPER_DEBUG_MODE=true
+export EPAPER_DEBUG_MODE_DONT_LOOP=true
 
-# Developer debug mode - no epaper device is required to develop or debug - the output that is originally 
-# sent to device is being saved as bmp files here: /tmp/epaper*.bmp
-#export EPAPER_DEBUG_MODE=true
-# An extension to above DEBUG_MODE - useful for Travis CI - don't loop endlessly, just exit after fist display of data
-#export EPAPER_DEBUG_MODE_DONT_LOOP=true
+# TBD - to use run-EDIT-ME.sh w/o those things below (WiP)
 
 # Experimental modification of LUT tables that form waveforms that refresh "pixels" - implemented only for 2.7" displays.
 # This modification makes refresh about 10 times faster for black die, and 2-3 times faster for red die. This of course has
