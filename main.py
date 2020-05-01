@@ -42,8 +42,10 @@ from tzlocal import get_localzone
 
 from epaper import EPaper
 
-
+# debugging aka developer mode (even w/o e-paper display and rpi)
 DEBUG_MODE = os.environ.get("EPAPER_DEBUG_MODE", "false") == "true"
+EPAPER_DEBUG_MODE_DONT_LOOP = os.environ.get("EPAPER_DEBUG_MODE_DONT_LOOP", "false") == "true"
+
 shutting_down = False
 details_to_display = None
 epaper = None
@@ -100,7 +102,7 @@ def main():
             logging.info("Going to refresh the main screen...")
             refresh_main_screen(epaper)
 
-        if os.environ.get("EPAPER_DEBUG_MODE_DONT_LOOP", "false") == "true":
+        if EPAPER_DEBUG_MODE_DONT_LOOP:
             shutting_down = True
 
         for i in range(120 if buttons is not None else 1):  # lower the CPU usage when no buttons handled
