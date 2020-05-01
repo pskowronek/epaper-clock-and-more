@@ -71,7 +71,7 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
     - alternatively you can use World Air Quality Index API - you can get it [here](https://aqicn.org/data-platform/token/) *)
     - WAQI (aqicn.org) works as a fallback if you don't specify any token for Airly
-  - by configuring *meteoalarm* related settings, weather forecasts can be supplemented with alerts originating from [meteoalarm](https://meteoalarm.eu)
+  - by configuring *meteoalarm* related settings, weather forecasts can be supplemented with alerts originating from *[meteoalarm.eu](https://meteoalarm.eu) site*
     - limited to EU countries that have ATOM feeds on above page (a limitation of of [meteoalarmapi](https://pypi.org/project/meteoalertapi/) library)
     - there might be issues (no readings) if chosen province name contains diacritic characters - **to be investigated**
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
