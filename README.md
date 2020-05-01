@@ -13,6 +13,7 @@ This project enhances the original project to support Waveshare 2.7inch displays
 - gauge for air quality index (AQI) of home location (thanks to [Airly.eu API](http://developer.airly.eu/) or [World Air Quality Index API](https://aqicn.org))
 - weather gauge can display:
   - current temperature + weather status icon plus forecast: daily min/max temperatures (thanks to [OpenWeather API](https://openweathermap.org) & [Weatherbit.io](https://weatherbit.io))
+  - alerts issued by EU countries (thanks to *[meteoalarm](https://meteoalarm.eu)* - limited support for EU countries i.e. where ATOM feed is available)
   - ~~alerts issued by governmental authorities - it works for the EU, US & Canada (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~ DarkSky is being phased out - see below
   - ~~warning about storms in defined vicinity (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~
 - buttons support to display detailed information about: weather, air quality, traffic and system information (on supported devices, i.e. 2.7inch HUT with switches)
@@ -70,6 +71,9 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
     - alternatively you can use World Air Quality Index API - you can get it [here](https://aqicn.org/data-platform/token/) *)
     - WAQI (aqicn.org) works as a fallback if you don't specify any token for Airly
+  - by configuring *meteoalarm* related settings, weather forecasts can be supplemented with alerts originating from [meteoalarm](https://meteoalarm.eu)
+    - limited to EU countries that have ATOM feeds on above page (a limitation of of [meteoalarmapi](https://pypi.org/project/meteoalertapi/) library)
+    - there might be issues (no readings) if chosen province name contains diacritic characters - **to be investigated**
   - type of e-paper device, whether it is 2.7 or 4.2 (by default it is pre-configured for 2.7" BWR)
   - tweak additional settings to:
     - prefer local temperature readings as served by Airly instead of weather provider(s)

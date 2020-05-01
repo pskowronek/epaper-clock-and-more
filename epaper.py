@@ -9,9 +9,12 @@ from PIL import Image
 from drawing import Drawing
 from providers.airly import Airly
 from providers.aqicn import Aqicn
+
 from providers.openweather import OpenWeather
 from providers.weatherbit import Weatherbit
 from providers.darksky import DarkSky
+
+from providers.meteoalarm import Meteoalarm
 
 from providers.gmaps import GMaps
 from providers.system_info import SystemInfo
@@ -101,6 +104,13 @@ class EPaper(object):
             int(os.environ.get("DARKSKY_TTL", "15"))
         )
 
+    meteoalarm = None
+    if os.environ.get('METEOALARM_COUNTRY') and os.environ.get('METEOALARM_PROVINCE'):
+        meteoalarm = Meteoalarm(
+            os.environ.get("METEOALARM_COUNTRY").decode('utf-8'),
+            os.environ.get("METEOALARM_PROVINCE").decode('utf-8'),
+            int(os.environ.get("METEOALARM_TTL", "15"))
+        )
 
     gmaps1 = GMaps(
         os.environ.get("GOOGLE_MAPS_KEY"),
@@ -195,7 +205,7 @@ class EPaper(object):
 
 
     def display_weather_details(self):
-        black_frame, red_frame = self.drawing.draw_weather_details(self.weather.get())
+        black_frame, red_frame = self.drawing.draw_weather_details(self.merge_weather_and_meteo(self.weather, self.meteoalarm))
         self.display_buffer(black_frame, red_frame, 'weather')
 
 
@@ -216,7 +226,7 @@ class EPaper(object):
 
         if force or formatted != self._str_time:
 
-            weather_data = self.weather.get()
+            weather_data = self.merge_weather_and_meteo(self.weather, self.meteoalarm)
             logging.info("--- weather: " + json.dumps(weather_data))
 
             aqi_data = self.aqi.get()
@@ -243,3 +253,12 @@ class EPaper(object):
 
             self._str_time = formatted
 
+    def merge_weather_and_meteo(self, weather, meteoalarm):
+        w = weather.get()
+        result = w
+        if meteoalarm:
+            m = meteoalarm.get()
+            result = w._replace(provider = "%s & %s" % (w.provider, m.provider) if m.alert_title or m.alert_description else w.provider,
+                                alert_title = w.alert_title if w.alert_title else m.alert_title,
+                                alert_description = w.alert_description if w.alert_description else m.alert_description)
+        return result

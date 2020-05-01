@@ -261,7 +261,9 @@ class Drawing(object):
         red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         draw = ImageDraw.Draw(black_buf)
         provider = weather.provider
-        self.draw_text(10, 10, "Weather by {}".format(provider), 32, draw)
+        provider_text = "Weather by {}".format(provider)
+        provider_text_size = 32 if len(provider_text) < 31 else 23  # try to accomodate a bigger title by reducing font size
+        self.draw_text(10, 10, provider_text, provider_text_size, draw)
 
         self.draw_text(10, 65, "Temperature: {}{}".format(weather.temp, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
         self.draw_text(10, 95, "Daily min: {}{}, max: {}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL.encode('utf-8'), weather.temp_max, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
