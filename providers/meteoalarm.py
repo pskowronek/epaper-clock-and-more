@@ -45,10 +45,12 @@ class Meteoalarm(Acquire):
             alarm_data = self.load()
             if alarm_data is None:
                 return self.DEFAULT
-        
+            title = alarm_data['headline'] if 'headline' in alarm_data else None
+            title = alarm_data['event'] if not title and 'event' in alarm_data else title
+
             return MeteoalarmTuple(
                 provider='Meteoalarm',
-                alert_title=alarm_data['event'] if 'event' in alarm_data else None,
+                alert_title=title,
                 alert_description=alarm_data['description'] if 'description' in alarm_data else None
             )
 
