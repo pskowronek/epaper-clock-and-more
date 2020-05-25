@@ -255,6 +255,11 @@ class Drawing(object):
         else:
             return address
 
+    def draw_blanks(self):
+        black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 0)
+        red_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 0)
+        white_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
+        return black_buf, red_buf, white_buf
 
     def draw_weather_details(self, weather):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)

@@ -131,12 +131,18 @@ def action_button(key, epaper):
 
 def refresh_main_screen(epaper, force = False):
     utc_dt = datetime.now(timezone('UTC'))  # time readings should be done in epaper itself (probably using acquire.py w/o caching)
-    epaper.display_main_screen(utc_dt.astimezone(get_localzone()), force)
-    if DEBUG_MODE:
-        epaper.display_weather_details()
-        epaper.display_aqi_details()
-        epaper.display_gmaps_details()
-        epaper.display_system_details()
+    dt = utc_dt.astimezone(get_localzone())
+    
+    time_format = "%H%M"                                                                                                                                                 
+    if dt.strftime(time_format) == '0300':
+        epaper.cycle_display()
+    else:
+        epaper.display_main_screen(dt, force)
+        if DEBUG_MODE:
+            epaper.display_weather_details()
+            epaper.display_aqi_details()
+            epaper.display_gmaps_details()
+            epaper.display_system_details()
 
 
 def signal_hook(*args):
