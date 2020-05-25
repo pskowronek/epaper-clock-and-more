@@ -215,9 +215,10 @@ class EPaper(object):
 
     def cycle_display(self):
         black_frame, red_frame, white_frame = self.drawing.draw_blanks()
-        for times in range(0, 10):
+        for cycle in range(0, 10):
             self.display_buffer(black_frame, white_frame, '')
-            self.display_buffer(white_frame, red_frame, '')
+            for cycle_reds in range(0, 10):
+                self.display_buffer(white_frame, red_frame, '')
 
     def display_main_screen(self, dt, force = False):
         time_format = "%H%M"
