@@ -45,6 +45,7 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
 
 - install [Raspbian](https://www.raspberrypi.org/downloads/) on SD card using [this](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) instruction
 - enable and configure WiFi before you start the system - more [here](https://howchoo.com/g/ndy1zte2yjn/how-to-set-up-wifi-on-your-raspberry-pi-without-ethernet)
+- enable ssh (but be [careful](https://www.raspberrypi.org/blog/a-security-update-for-raspbian-pixel/) - don't expose ssh port to internet, or change the password ASAP) - on SD card create ```ssh``` file, it can be empty (for example ```touch /Volumes/boot/ssh```)
 - find the IP of RPi by scanning your local network or take a look at your router to find a new device connected to your network
 - SSH to your raspberry: ```ssh pi@10.20.30.40```
 - python 2.7 should be already present, you may want to verify this by running: ```python --version```
