@@ -49,6 +49,7 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
 - find the IP of RPi by scanning your local network or take a look at your router to find a new device connected to your network
 - SSH to your raspberry: ```ssh pi@10.20.30.40```
 - python 2.7 should be already present, you may want to verify this by running: ```python --version```
+- check if SPI (required by display) is enabled: ```sudo raspi-config```
 - install git: ```sudo apt install git```
 - issue the command to fetch this project: ```git clone https://github.com/pskowronek/epaper-clock-and-more.git```
 - go to the project directory: ```cd epaper-clock-and-more``` and install required python modules: ```pip install -r requirements.txt```
