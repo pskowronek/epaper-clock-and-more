@@ -59,10 +59,10 @@ export DARKSKY_TTL=15                       # deprecated (pending removal in 202
 
 # AQICN City or ID (see: https://aqicn.org/search/) to use instead of LAT&LON coords, if you set it to 'here' then it is going to be based on IP geolocation
 #export AQICN_CITY_OR_ID=here
-# Meteoalarm.eu country and province name to provide weather alerts in Europe (optional feature, uncomment and provide values for both to turn it on).
-# To get the country code and province name visit Meteoalarm.eu website. Mind that the country & province must have ATOM feed available (check top right corner)
-#export METEOALARM_COUNTRY=PL
-# Please do remember to use UTF-8 encoding for province name. Also, apparently there's a problem with (some) UTF-8 encoded provice names - they might not be found by meteoalarmapi library (to be investigated)
+# Meteoalarm.org country and province name to provide weather alerts in Europe (optional feature, uncomment and provide values for both to turn it on).
+# To get the country name and province name visit Meteoalarm.org website. Mind that the country & province must have ATOM feed available (go here: https://feeds.meteoalarm.org/ - use country name as stated in atom feed url)
+#export METEOALARM_COUNTRY=poland
+# Please do remember to use UTF-8 encoding for province name. Also, apparently there's a problem with (some) UTF-8 encoded province names - they might not be found by meteoalarmapi library (to be investigated)
 #export METEOALARM_PROVINCE=Kraków
 
 # Units
