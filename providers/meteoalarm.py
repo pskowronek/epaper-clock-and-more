@@ -1,4 +1,4 @@
-# Uses European Meteoalarm.eu to provide weather alerts
+# Uses European Meteoalarm.org to provide weather alerts
 from acquire import Acquire
 
 import json
@@ -12,7 +12,7 @@ MeteoalarmTuple = namedtuple('Meteoalarm', ['provider', 'alert_title', 'alert_de
 
 class Meteoalarm(Acquire):
 
-    DEFAULT = MeteoalarmTuple(provider='Meteoalarm.eu', alert_title=None, alert_description=None)
+    DEFAULT = MeteoalarmTuple(provider='Meteoalarm.org', alert_title=None, alert_description=None)
 
     def __init__(self, country, province, cache_ttl):
         self.country = country
@@ -29,7 +29,7 @@ class Meteoalarm(Acquire):
         return False
 
     def acquire(self):
-        logging.info("Getting a fresh alarm from Meteoalarm.eu...")
+        logging.info("Getting a fresh alarm from Meteoalarm.org...")
 
         try:
             meteo = Meteoalert(self.country, self.province)
