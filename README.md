@@ -127,7 +127,7 @@ To enable this feature set the following environment variable: ```export EPAPER_
 
 ## License
 
-Since this project is a fork, the original licenses still apply. The modifications and enhancements are being done under Apache 2 license.
+Since this project is a fork, the original licenses still apply. The modifications and enhancements are being done under Apache 2 license and MIT (dual licence).
 
 ## Authors
 
