@@ -60,6 +60,7 @@ def main():
 
     atexit.register(shutdown_hook)
     signal.signal(signal.SIGTERM, signal_hook)
+    signal.signal(signal.SIGABRT, signal_hook)  # sent by watchdog
 
     buttons = None
     if not DEBUG_MODE and (os.environ.get("EPAPER_BUTTONS_ENABLED", "true") == "true"):
