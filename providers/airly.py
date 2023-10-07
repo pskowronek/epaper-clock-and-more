@@ -45,7 +45,8 @@ class Airly(Acquire):
                     "apikey" : self.key,
                     "Accept-Language" : "en",
                     "Accept" : "application/json"
-                }
+                },
+                timeout=(2, 4)
             )
             return r.status_code, r.text
         except Exception as e:

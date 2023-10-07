@@ -66,6 +66,7 @@ class GMaps(Acquire):
                     self.dest_lon,
                     self.key
                 ),
+                timeout=(2, 4)
             )
             return r.status_code, r.text
         except Exception as e:

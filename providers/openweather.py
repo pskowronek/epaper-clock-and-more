@@ -43,7 +43,8 @@ class OpenWeather(Acquire):
                     "lat" : self.lat,
                     "lon" : self.lon,
                     "units" : self.units
-                }
+                },
+                timeout=(2, 4)
             )
             return r.status_code, r.text
 

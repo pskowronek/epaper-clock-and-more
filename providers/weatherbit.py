@@ -44,7 +44,8 @@ class Weatherbit(Acquire):
                     "lat" : self.lat,
                     "lon" : self.lon,
                     "units" : self.units
-                }
+                },
+                timeout=(2, 4)
             )
             current = r.json()
 
@@ -55,7 +56,8 @@ class Weatherbit(Acquire):
                     "lat" : self.lat,
                     "lon" : self.lon,
                     "units" : self.units
-                }
+                },
+                timeout=(2, 4)
             )
             forecast = r.json()
 

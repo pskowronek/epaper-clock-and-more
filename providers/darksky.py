@@ -48,7 +48,8 @@ class DarkSky(Acquire):
                 params = {
                     "units" : self.units,
                     "exclude" : "minutely,hourly,flags"
-                }
+                },
+                timeout=(2, 4)
             )
             return r.status_code, r.text
 

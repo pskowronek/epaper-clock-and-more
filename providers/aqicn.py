@@ -40,7 +40,8 @@ class Aqicn(Acquire):
                 "https://api.waqi.info/feed/{}/?token={}".format(
                     self.city_or_id if self.city_or_id else "geo:{};{}".format(self.lat, self.lon),
                     self.key
-                )
+                ),
+                timeout=(2, 4)
             )
             return r.status_code, r.text
         except Exception as e:
