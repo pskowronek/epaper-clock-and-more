@@ -78,6 +78,8 @@ def main():
     notifier = sdnotify.SystemdNotifier()
     notifier.notify("READY=1")
 
+    epaper.display_starting()
+
     while True:
         if shutting_down:
             logging.info("App is shutting down.....")

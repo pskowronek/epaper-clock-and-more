@@ -189,6 +189,11 @@ class EPaper(object):
         self.display(black_buf, red_buf, dt)
 
 
+    def display_starting(self):
+        black_frame, red_frame = self.drawing.draw_starting(self.MONO_DISPLAY)
+        self.display_buffer(black_frame, red_frame, 'starting')
+
+
     def display_shutdown(self):
         black_frame, red_frame = self.drawing.draw_shutdown(self.MONO_DISPLAY)
         self.display_buffer(black_frame, red_frame, 'shutdown')

@@ -200,6 +200,14 @@ class Drawing(object):
         self.draw_text_eta(start_pos[0], start_pos[1], caption, 70, draw, 255)
 
 
+    def draw_starting(self, is_mono):
+        black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
+        red_buf = black_buf if (is_mono) else Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
+        shutdown_icon = Image.open("./resources/images/starting.bmp")
+        red_buf.paste(shutdown_icon, (0, 0))
+        return black_buf, red_buf
+
+
     def draw_shutdown(self, is_mono):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = black_buf if (is_mono) else Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
