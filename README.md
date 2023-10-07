@@ -92,6 +92,9 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - reboot device to verify if it works
   - if you needed to modify epaper.service issue this command: ```sudo systemctl daemon-reload```
   - logs can be observed in /var/log/syslog: ```sudo tail -f /var/log/syslog | grep run.sh```
+- recommended system change in case of network outage ([see #18](/../../issues/18))
+  - add the following line to `/etc/resolv.conf`: `options timeout:2 attempts:1` (only 1 attempt for resolving names with 2s timeout)
+
 
 *) By default data are being fetched every 10+ minutes so they should comply with developer free accounts limitations
 
