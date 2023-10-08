@@ -46,10 +46,10 @@ class Drawing(object):
         text_length = font.getlength(text)
         if text_length * 1.05 > self.CANVAS_WIDTH - x:
             break_at = len(text) * (self.CANVAS_WIDTH - x) / text_length  # rough estimation (proportion: text width to screen size minus start pos vs unknown to string len)
-            lines = textwrap.wrap(text, width=break_at)
+            lines = textwrap.wrap(text, width=int(break_at))
             line_counter = 0
             for line in lines:
-                draw.text((x, y + line_counter * font_size * 1.1), line, font=font, fill=color)
+                draw.text((x, int(y + line_counter * font_size * 1.1)), line, font=font, fill=color)
                 line_counter += 1
                 height += font_size * 1.2
         else:
