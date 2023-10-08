@@ -14,12 +14,12 @@ pil-compat == 1.0.0
 pillow-pil == 0.1dev
 
 # main.py: 39
-pytz == 2018.5
+pytz == 2023.3.post1
 
 # airly.py: 8
 # gmaps.py: 8
 # weather.py: 8
-requests == 2.18.4
+requests == 2.31.0
 
 # main.py: 36
 sdnotify == 0.3.2
@@ -28,7 +28,7 @@ sdnotify == 0.3.2
 tzlocal == 1.5.1
 
 # system_info.py
-psutil == 5.4.7
+psutil == 5.9.5
 
 # system_info.py
 uptime == 3.0.1
