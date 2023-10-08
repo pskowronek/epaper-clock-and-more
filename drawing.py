@@ -93,9 +93,9 @@ class Drawing(object):
 
         storm_distance_warning = self.storm_distance_warn
 
-        if weather.alert_title is not None:
+        if weather.alert_description is not None:
             top_y = top_y + 3
-            caption = "[!] {}".format(weather.alert_title.lower())
+            caption = "[!] {}".format(weather.alert_description.lower())
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
             if black_on_red:
