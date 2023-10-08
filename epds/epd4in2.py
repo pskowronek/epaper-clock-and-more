@@ -24,7 +24,7 @@
  # THE SOFTWARE.
  #
 
-import . epdif
+from . import epdif
 import RPi.GPIO as GPIO
 
 # Display resolution
@@ -205,7 +205,7 @@ class EPD:
             self.send_data(self.lut_wb[count])
 
     def get_frame_buffer(self, image):
-        buf = [0] * (self.width * self.height / 8)
+        buf = [0] * int(self.width * self.height / 8)
         # Set buffer to value of Python Imaging Library image.
         # Image must be in mode 1.
         image_monocolor = image.convert('1')
@@ -219,7 +219,7 @@ class EPD:
             for x in range(self.width):
                 # Set the bits for the column of pixels at the current position.
                 if pixels[x, y] != 0:
-                    buf[(x + y * self.width) / 8] |= 0x80 >> (x % 8)
+                    buf[int((x + y * self.width) / 8)] |= 0x80 >> (x % 8)
         return buf
 
     def display_frame(self, frame_buffer):
@@ -237,11 +237,11 @@ class EPD:
 
         if (frame_buffer != None):
             self.send_command(DATA_START_TRANSMISSION_1)
-            for i in range(0, self.width * self.height / 8):
+            for i in range(0, int(self.width * self.height / 8)):
                 self.send_data(0xFF)       # bit set: white, bit reset: black
             self.delay_ms(2)
             self.send_command(DATA_START_TRANSMISSION_2) 
-            for i in range(0, self.width * self.height / 8):
+            for i in range(0, int(self.width * self.height / 8)):
                 self.send_data(frame_buffer[i])
             self.delay_ms(2)                  
 

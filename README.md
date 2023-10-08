@@ -50,6 +50,9 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
 - check if SPI (required by display) is enabled: ```sudo raspi-config```
 - install git: ```sudo apt install git```
 - install python pip: ```sudo apt install python3-pip```
+- install the following package as required by Pillow: 
+  - libopenjp2-7: ```apt-get install libopenjp2-7```
+  - libtiff5: ```apt-get install libtiff5```
 - issue the command to fetch this project: ```git clone https://github.com/pskowronek/epaper-clock-and-more.git```
 - go to the project directory: ```cd epaper-clock-and-more``` and install required python modules: ```pip3 install -r requirements.txt```
   - if it fails then please try to analyze any error statements and follow instructions if provided
