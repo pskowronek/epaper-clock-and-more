@@ -31,7 +31,7 @@ class Drawing(object):
 
 
     def load_font(self, font_size):
-        return ImageFont.truetype('./resources/font/default', font_size)
+        return ImageFont.truetype('./resources/font/default', int(font_size))
 
 
     def draw_text(self, x, y, text, font_size, draw, color=0):
