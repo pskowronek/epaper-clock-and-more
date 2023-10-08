@@ -1,6 +1,6 @@
 # https://github.com/pskowronek/epaper-clock-and-more, Apache 2 license
 
-from acquire import Acquire
+from .acquire import Acquire
 
 import psutil
 from uptime import uptime
@@ -37,7 +37,7 @@ class SystemInfo(Acquire):
                 uptime="{:0.0f} days".format(uptime() / (3600 * 24)),
                 cpu_usage="{} %".format(psutil.cpu_percent()),
                 mem_usage="{} %".format(psutil.virtual_memory().percent),
-                free_disk="{} MB".format(psutil.disk_usage('/').free / (1024 * 1024))
+                free_disk="{:0.1f} MB".format(psutil.disk_usage('/').free / (1024 * 1024))
             )
 
         except Exception as e:

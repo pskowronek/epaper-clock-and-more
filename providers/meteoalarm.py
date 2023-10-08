@@ -1,5 +1,5 @@
 # Uses European Meteoalarm.org to provide weather alerts
-from acquire import Acquire
+from .acquire import Acquire
 
 import json
 import logging

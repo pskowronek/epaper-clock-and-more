@@ -4,6 +4,7 @@
 import logging
 import json
 import os
+import sys
 from PIL import Image
 
 from drawing import Drawing
@@ -12,7 +13,6 @@ from providers.aqicn import Aqicn
 
 from providers.openweather import OpenWeather
 from providers.weatherbit import Weatherbit
-from providers.darksky import DarkSky
 
 from providers.meteoalarm import Meteoalarm
 
@@ -27,7 +27,7 @@ class EPaper(object):
     DEAD_TIMES = eval(os.environ.get("DEAD_TIMES", "[]"))
     # whether to display two vertical dots to separate hrs and mins
     CLOCK_HOURS_MINS_SEPARATOR = os.environ.get("CLOCK_HRS_MINS_SEPARATOR", "true") == "true"
-    # whether to prefer AQI temperature instead of DarkSky's
+    # whether to prefer AQI temperature instead of Weather provider
     PREFER_AIRLY_LOCAL_TEMP = os.environ.get("PREFER_AIRLY_LOCAL_TEMP", "false") == "true"
     # warn states painted black instead of white on red canvas?
     WARN_PAINTED_BLACK_ON_RED = os.environ.get("WARN_PAINTED_BLACK_ON_RED", "false") == "true"
@@ -54,7 +54,7 @@ class EPaper(object):
 
 
     drawing = Drawing(
-        os.environ.get("DARK_SKY_UNITS", "si"),
+        os.environ.get("WEATHER_UNITS", "si"),
         int(os.environ.get("WEATHER_STORM_DISTANCE_WARN", "10")),
         int(os.environ.get("AQI_WARN_LEVEL", "75")),
         int(os.environ.get("FIRST_TIME_WARN_ABOVE_PERCENT", "50")),
@@ -96,19 +96,13 @@ class EPaper(object):
             int(os.environ.get("WEATHERBIT_IO_TTL", "15"))
         )
     else:
-        weather = DarkSky(
-            os.environ.get("DARKSKY_KEY"),
-            os.environ.get("LAT"),
-            os.environ.get("LON"),
-            os.environ.get("DARKSKY_UNITS", "si"),
-            int(os.environ.get("DARKSKY_TTL", "15"))
-        )
+        sys.exit("Please configure a supported weather info provider")
 
     meteoalarm = None
     if os.environ.get('METEOALARM_COUNTRY') and os.environ.get('METEOALARM_PROVINCE'):
         meteoalarm = Meteoalarm(
-            os.environ.get("METEOALARM_COUNTRY").decode('utf-8'),
-            os.environ.get("METEOALARM_PROVINCE").decode('utf-8'),
+            os.environ.get("METEOALARM_COUNTRY"),
+            os.environ.get("METEOALARM_PROVINCE"),
             int(os.environ.get("METEOALARM_TTL", "15"))
         )
 

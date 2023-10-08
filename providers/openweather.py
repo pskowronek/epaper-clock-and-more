@@ -1,5 +1,5 @@
 # Uses OpenWeather's One Call API: https://openweathermap.org/api/one-call-api - a result of DarkSky acquisition by Apple
-from acquire import Acquire
+from .acquire import Acquire
 
 import logging
 import requests

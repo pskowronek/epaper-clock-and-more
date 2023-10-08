@@ -1,5 +1,5 @@
 # Uses Weatherbit.io API: https://www.weatherbit.io/
-from acquire import Acquire
+from .acquire import Acquire
 
 import json
 import logging

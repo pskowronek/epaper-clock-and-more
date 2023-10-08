@@ -14,8 +14,6 @@ This project enhances the original project to support Waveshare 2.7inch displays
 - weather gauge can display:
   - current temperature + weather status icon plus forecast: daily min/max temperatures (thanks to [OpenWeather API](https://openweathermap.org) & [Weatherbit.io](https://weatherbit.io))
   - alerts issued by EU countries (thanks to *[meteoalarm](https://meteoalarm.org)* - limited support for EU countries i.e. where ATOM feed is available)
-  - ~~alerts issued by governmental authorities - it works for the EU, US & Canada (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~ DarkSky is being phased out - see below
-  - ~~warning about storms in defined vicinity (thanks to [DarkSky.net API](https://darksky.net/dev/docs))~~
 - buttons support to display detailed information about: weather, air quality, traffic and system information (on supported devices, i.e. 2.7inch HUT with switches)
 - font with relaxed license already included in the project
 
@@ -48,14 +46,14 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
 - enable ssh (but be [careful](https://www.raspberrypi.org/blog/a-security-update-for-raspbian-pixel/) - don't expose ssh port to internet, or change the password ASAP) - on SD card create ```ssh``` file, it can be empty (for example ```touch /Volumes/boot/ssh```)
 - find the IP of RPi by scanning your local network or take a look at your router to find a new device connected to your network
 - SSH to your raspberry: ```ssh pi@10.20.30.40```
-- python 2.7 should be already present, you may want to verify this by running: ```python --version```
+- Python 3 should be already present, you may want to verify this by running: ```python3 --version```
 - check if SPI (required by display) is enabled: ```sudo raspi-config```
 - install git: ```sudo apt install git```
-- install python pip: ```sudo apt install python-pip```
+- install python pip: ```sudo apt install python3-pip```
 - issue the command to fetch this project: ```git clone https://github.com/pskowronek/epaper-clock-and-more.git```
-- go to the project directory: ```cd epaper-clock-and-more``` and install required python modules: ```pip install -r requirements.txt```
+- go to the project directory: ```cd epaper-clock-and-more``` and install required python modules: ```pip3 install -r requirements.txt```
   - if it fails then please try to analyze any error statements and follow instructions if provided
-  - the most common issue is Pillow's requirement regarding libjpeg - if it is the case then invoke ```sudo apt-get install libjpeg-dev ``` and retry pip install
+  - the most common issue is Pillow's requirement regarding libjpeg - if it is the case then invoke ```sudo apt-get install libjpeg-dev ``` and retry pip3 install
   - before you report a bug, try to google it first :)
 - rename run-EDIT-ME.sh to run.sh and edit run.sh to configure:
   - your home location (lon & lat)
@@ -65,12 +63,9 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
     - tl;dr: basically you have to enable Distance Matrix API - follow [these](https://developers.google.com/maps/documentation/distance-matrix/start#authentication) instructions,
       then you have to enable billing for it - just go [there](https://console.cloud.google.com/billing) - don't worry, they won't charge you if you are below the limits
   - a key for weather forecasts from OpenWeather - you can get it [here](https://openweathermap.org/home/sign_up) or *)
-    - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider (see below)
+    - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider
   - a key for weather forecasts from Weatherbit.io - you can get it [here](https://www.weatherbit.io/account/create) *)
     - alternative weather forecasts provider
-  - a key for weather forecasts from DarkSky.net - ~~you can get it [here](https://darksky.net/dev/register)~~ *)
-    - **DarkSky has been recently acquired by Apple since then no new submissions are being accepted**
-    - DarkSky is now in fallback mode (if no OpenWeather or Weatherbit.io key is provided) - it's been set as deprecated (should work until the end of 2021)
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)
     - alternatively you can use World Air Quality Index API - you can get it [here](https://aqicn.org/data-platform/token/) *)
     - WAQI (aqicn.org) works as a fallback if you don't specify any token for Airly
@@ -92,7 +87,7 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - reboot device to verify if it works
   - if you needed to modify epaper.service issue this command: ```sudo systemctl daemon-reload```
   - logs can be observed in /var/log/syslog: ```sudo tail -f /var/log/syslog | grep run.sh```
-- recommended system change in case of network outage ([see #18](/../../issues/18))
+- recommended system change in case of network outage (see [#18](/../../issues/18))
   - add the following line to `/etc/resolv.conf`: `options timeout:2 attempts:1` (only 1 attempt for resolving names with 2s timeout)
 
 

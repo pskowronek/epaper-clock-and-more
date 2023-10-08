@@ -17,13 +17,13 @@ class Drawing(object):
     CANVAS_HEIGHT = 300
 
     # Temperature symbol
-    TEMPERATURE_SYMBOL = u'°'
+    TEMPERATURE_SYMBOL = '°'
     # PM values symbol
-    PM_SYMBOL = u'µg/m³'
+    PM_SYMBOL = 'µg/m³'
 
 
-    def __init__(self, darksky_units, storm_distance_warn, aqi_warn_level, primary_time_warn_above, secondary_time_warn_above):
-        self.distance_symbol = 'km' if darksky_units == 'si' else 'mi'
+    def __init__(self, weather_units, storm_distance_warn, aqi_warn_level, primary_time_warn_above, secondary_time_warn_above):
+        self.distance_symbol = 'km' if weather_units == 'si' else 'mi'
         self.storm_distance_warn = storm_distance_warn
         self.aqi_warn_level = aqi_warn_level
         self.primary_time_warn_above = primary_time_warn_above
@@ -36,26 +36,26 @@ class Drawing(object):
 
     def draw_text(self, x, y, text, font_size, draw, color=0):
         font = self.load_font(font_size)
-        draw.text((x, y), unicode(text, "utf-8"), font=font, fill=color)
+        draw.text((x, y), text, font=font, fill=color)
         return y + font_size * 1.2  # +20%
 
 
     def draw_multiline_text(self, x, y, text, font_size, draw, color=0):
         height = 0
         font = self.load_font(font_size)
-        text_dims = font.getsize(text)
-        if text_dims[0] * 1.05 > self.CANVAS_WIDTH - x:
-            break_at = len(text) * (self.CANVAS_WIDTH - x) / text_dims[0]  # rough estimation (proportion: text width to screen size minus start pos vs unknown to string len)
+        text_length = font.getlength(text)
+        if text_length * 1.05 > self.CANVAS_WIDTH - x:
+            break_at = len(text) * (self.CANVAS_WIDTH - x) / text_length  # rough estimation (proportion: text width to screen size minus start pos vs unknown to string len)
             lines = textwrap.wrap(text, width=break_at)
             line_counter = 0
             for line in lines:
-                draw.text((x, y + line_counter * font_size * 1.1), unicode(line, "utf-8"), font=font, fill=color)
+                draw.text((x, y + line_counter * font_size * 1.1), line, font=font, fill=color)
                 line_counter += 1
                 height += font_size * 1.2
         else:
-            draw.text((x, y), unicode(text, "utf-8"), font=font, fill=color)
+            draw.text((x, y), text, font=font, fill=color)
             height += font_size * 1.2
-      
+
         return y + height
 
 
@@ -66,7 +66,7 @@ class Drawing(object):
 
     def draw_weather(self, buf, red_buf, weather, airly, prefer_airly_local_temp, black_on_red):
         start_pos = (0, 200)
-    
+
         back = Image.open('./resources/images/back.bmp')
         buf.paste(back, start_pos)
 
@@ -88,14 +88,14 @@ class Drawing(object):
         if prefer_airly_local_temp and airly.temperature is not None:
             current_temp = airly.temperature
 
-        caption = "{:0.0f}{}".format(current_temp, self.TEMPERATURE_SYMBOL.encode('utf-8'))
+        caption = "{:0.0f}{}".format(current_temp, self.TEMPERATURE_SYMBOL)
         self.draw_text(85, top_y, caption, 90, draw, 255)
 
         storm_distance_warning = self.storm_distance_warn
 
         if weather.alert_title is not None:
             top_y = top_y + 3
-            caption = "[!] {}".format(weather.alert_title.lower().encode('utf-8'))
+            caption = "[!] {}".format(weather.alert_title.lower())
             draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 255, 255)
             red_draw.rectangle((215, top_y + 5, self.CANVAS_WIDTH - 10, top_y + 95), 0, 0)
             if black_on_red:
@@ -112,7 +112,7 @@ class Drawing(object):
             self.draw_multiline_text(230, top_y, caption, 40, red_draw, 255)    # on red canvas
         else:
             top_y = top_y + 17
-            caption = "{:0.0f}{} {:0.0f}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL.encode('utf-8'), weather.temp_max, self.TEMPERATURE_SYMBOL.encode('utf-8'))
+            caption = "{:0.0f}{} {:0.0f}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL, weather.temp_max, self.TEMPERATURE_SYMBOL)
             self.draw_text(205, top_y, caption, 60, draw, 255)
 
 
@@ -125,40 +125,40 @@ class Drawing(object):
                 n = "_SPACE"
             fn = 'resources/images/%s.bmp' % n
             img_num = Image.open(fn)
-            img_num = img_num.resize((img_num.size[0], img_num.size[1] / 2), Image.NEAREST)
+            img_num = img_num.resize((img_num.size[0], (int)(img_num.size[1] / 2)), Image.NEAREST)
             img_buf.paste(img_num, (start_pos[0] + offs, start_pos[1]))
             offs += im_width
         if use_hrs_mins_separator:
             divider = Image.open('resources/images/clock-middle.bmp')
-            img_buf.paste(divider, (self.CANVAS_WIDTH / 2 - 10, start_pos[1] + 10))
+            img_buf.paste(divider, (int(self.CANVAS_WIDTH / 2 - 10), start_pos[1] + 10))
 
 
     def draw_text_aqi(self, x, y, text, text_size, draw, font_color=255):
         font = self.load_font(text_size)
-        font_dims = font.getsize(text)
+        font_dims = font.getlength(text)
 
         # lower font size to accommodate huge polution levels
-        if font_dims[0] > 100:
+        if font_dims > 100:
             font = self.load_font(text_size * 2 / 3)
-            draw.text((x, y + 15), unicode(text, "utf-8"), font=font, fill=font_color)
+            draw.text((x, y + 15), text, font=font, fill=font_color)
         else:
-            draw.text((x, y), unicode(text, "utf-8"), font=font, fill=font_color)
+            draw.text((x, y), text, font=font, fill=font_color)
 
 
     def draw_text_eta(self, x, y, text, text_size, draw, font_color=255):
         font = self.load_font(text_size)
-        font_width = font.getsize(text)
-    
+        font_width = font.getlength(text)
+
         # lower font size to accommodate time in minutes
-        if font_width[0] > 100:
+        if font_width > 100:
             font = self.load_font(text_size * 2 / 3)
-        font_width = font.getsize(text)
+        font_width = font.getlength(text)
 
         # one more time lower font size to accommodate time in minutes - yes, would be nice to convert value to hours or ... days
-        if font_width[0] > 100:
+        if font_width > 100:
             font = self.load_font(text_size * 2 / 4)
 
-        draw.text((x, y), unicode(text, "utf-8"), font=font, fill=font_color)
+        draw.text((x, y), text, font=font, fill=font_color)
 
 
     def draw_aqi(self, black_buf, red_buf, aqi, black_on_red):
@@ -182,12 +182,12 @@ class Drawing(object):
         start_pos = (50  + ((idx + 1) * self.CANVAS_WIDTH) / 3, 100)
         secs_in_traffic = 1.0 * gmaps.time_to_dest_in_traffic
         secs = 1.0 * gmaps.time_to_dest
-        
+
         no_warn = secs < 0 or secs * (100.0 + warn_above_percent) / 100.0 > secs_in_traffic
         buf = black_buf if no_warn else red_buf
 
         back = Image.open("./resources/images/back_eta_{}.bmp".format(idx))
-        buf.paste(back, (((idx + 1) * self.CANVAS_WIDTH) / 3 , 100))
+        buf.paste(back, (int(((idx + 1) * self.CANVAS_WIDTH) / 3) , 100))
 
         draw = ImageDraw.Draw(buf)
 
@@ -224,16 +224,16 @@ class Drawing(object):
         provider = aqi.provider
         self.draw_text(10, 10, "Air Quality Index by {}".format(provider), 35, draw)
 
-        y = self.draw_text(10, 60, "PM2.5: {:0.0f}, PM10: {:0.0f} ({})".format(aqi.pm25, aqi.pm10, self.PM_SYMBOL.encode('utf-8')), 30, draw)
-        y = self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(aqi.aqi, aqi.level.replace('_', ' ').encode('utf-8') if aqi.level else 'N/A'), 30, draw)
+        y = self.draw_text(10, 60, "PM2.5: {:0.0f}, PM10: {:0.0f} ({})".format(aqi.pm25, aqi.pm10, self.PM_SYMBOL), 30, draw)
+        y = self.draw_text(10, y, "AQI: {:0.0f}, level: {}".format(aqi.aqi, aqi.level.replace('_', ' ') if aqi.level else 'N/A'), 30, draw)
         if aqi.advice:
-            y = self.draw_multiline_text(10, y, "Advice: {}".format(aqi.advice.encode('utf-8')) if aqi.advice else 'N/A', 25, draw)
+            y = self.draw_multiline_text(10, y, "Advice: {}".format(aqi.advice) if aqi.advice else 'N/A', 25, draw)
         if aqi.humidity != -1:
-            y = self.draw_text(10, y, "Humidity: {} %".format(aqi.humidity), 30, draw)
+            y = self.draw_text(10, y, "Humidity: {:.1f} %".format(aqi.humidity), 30, draw)
         if aqi.pressure != -1:
             y = self.draw_text(10, y, "Pressure:  {} hPa".format(aqi.pressure), 30, draw)
         if aqi.temperature:
-            y = self.draw_text(10, y, "Temperature: {} {}C".format(aqi.temperature, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
+            y = self.draw_text(10, y, "Temperature: {:.1f} {}C".format(aqi.temperature, self.TEMPERATURE_SYMBOL), 30, draw)
 
         return black_buf, red_buf
 
@@ -244,14 +244,14 @@ class Drawing(object):
         draw = ImageDraw.Draw(black_buf)
         self.draw_text(10, 10, "Traffic info by {}".format(gmaps1.provider), 35, draw)
 
-        y = self.draw_multiline_text(10, 50, "From: {}".format(self.trim_address(gmaps1.origin_address).encode('utf-8')), 25, draw)
+        y = self.draw_multiline_text(10, 50, "From: {}".format(self.trim_address(gmaps1.origin_address)), 25, draw)
         y += 5
-        y = self.draw_multiline_text(10, y, "To #1: {}".format(self.trim_address(gmaps1.destination_address).encode('utf-8')), 25, draw)
-        y = self.draw_text(10, y, "{}, avg: {}m, now: {}m".format(gmaps1.distance, gmaps1.time_to_dest / 60, gmaps1.time_to_dest_in_traffic / 60), 30, draw)
+        y = self.draw_multiline_text(10, y, "To #1: {}".format(self.trim_address(gmaps1.destination_address)), 25, draw)
+        y = self.draw_text(10, y, "{}, avg: {:.0f}m, now: {:.0f}m".format(gmaps1.distance, gmaps1.time_to_dest / 60, gmaps1.time_to_dest_in_traffic / 60), 30, draw)
 
         y += 5
-        y = self.draw_multiline_text(10, y, "To #2: {}".format(self.trim_address(gmaps2.destination_address).encode('utf-8')), 25, draw)
-        self.draw_text(10, y, "{}, avg: {}m, now: {}m".format(gmaps2.distance, gmaps2.time_to_dest / 60, gmaps2.time_to_dest_in_traffic / 60), 30, draw)
+        y = self.draw_multiline_text(10, y, "To #2: {}".format(self.trim_address(gmaps2.destination_address)), 25, draw)
+        self.draw_text(10, y, "{}, avg: {:.0f}m, now: {:.0f}m".format(gmaps2.distance, gmaps2.time_to_dest / 60, gmaps2.time_to_dest_in_traffic / 60), 30, draw)
 
         return black_buf, red_buf
 
@@ -278,15 +278,15 @@ class Drawing(object):
         provider_text_size = 32 if len(provider_text) < 31 else 23  # try to accomodate a bigger title by reducing font size
         self.draw_text(10, 10, provider_text, provider_text_size, draw)
 
-        self.draw_text(10, 65, "Temperature: {}{}".format(weather.temp, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
-        self.draw_text(10, 95, "Daily min: {}{}, max: {}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL.encode('utf-8'), weather.temp_max, self.TEMPERATURE_SYMBOL.encode('utf-8')), 30, draw)
-        y = self.draw_multiline_text(10, 145, "Daily summary: {}".format(weather.summary.encode('utf-8')), 25, draw)
+        self.draw_text(10, 65, "Temperature: {:.1f}{}".format(weather.temp, self.TEMPERATURE_SYMBOL), 30, draw)
+        self.draw_text(10, 95, "Daily min: {:.1f}{}, max: {:.1f}{}".format(weather.temp_min, self.TEMPERATURE_SYMBOL, weather.temp_max, self.TEMPERATURE_SYMBOL), 30, draw)
+        y = self.draw_multiline_text(10, 145, "Daily summary: {}".format(weather.summary), 25, draw)
     
         caption = None
         if weather.alert_description is not None:
-            caption = "Alert: {}".format(weather.alert_description.encode('utf-8'))
+            caption = "Alert: {}".format(weather.alert_description)
         else:
-            caption = "Forecast: {}".format(weather.forecast_summary.encode('utf-8'))
+            caption = "Forecast: {}".format(weather.forecast_summary)
         self.draw_multiline_text(10, y, caption, 25, draw)
 
         return black_buf, red_buf

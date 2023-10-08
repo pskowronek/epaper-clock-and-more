@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Original code: https://github.com/prehensile/waveshare-clock
 # Modifications: https://github.com/pskowronek/epaper-clock-and-more, Apache 2 license
 
@@ -51,9 +53,11 @@ class Acquire(object):
         result = False
         if (status_code in [401, 403] ):
             logging.warn("Remote server returned: %d - probably wrong API key" % status_code)
+            logging.debug("Response data: %s[...]" % response_text[0:150])
             result = True
         elif (status_code != 200):
             logging.warn("Remote server returned unexpected status code: %d" % status_code)
+            logging.debug("Response data: %s[...]" % response_text[0:150])
             result = True
 
         return result
@@ -64,6 +68,8 @@ class Acquire(object):
         status_code, response_text = self.acquire()
         if status_code is not None:
             if not self.error_found(status_code, response_text):
+                # https://stackoverflow.com/a/71029660/1715521
+                # response_text = response_text.encode().decode('utf-8-sig')
                 acquired_data = json.loads(response_text)
                 # write just acquired data to cache
                 fn_cache = self.cache_path()

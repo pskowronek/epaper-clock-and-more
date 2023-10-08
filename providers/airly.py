@@ -1,7 +1,7 @@
 # Original code: https://github.com/prehensile/waveshare-clock
 # Modifications: https://github.com/pskowronek/epaper-clock-and-more, Apache 2 license
 
-from acquire import Acquire
+from .acquire import Acquire
 
 import logging
 import requests

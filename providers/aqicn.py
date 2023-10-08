@@ -1,6 +1,6 @@
 # AQICN.org (Air Quality Open Data Platform) - a provider of AQI througout a world (an alternative /a fallback/ for Airly which is more popular in Central Europe)
 
-from acquire import Acquire
+from .acquire import Acquire
 
 import logging
 import requests

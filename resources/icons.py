@@ -102,7 +102,7 @@ weather_icons = {
     "u00d" : "45.bmp",
     "u00n" : "45.bmp",
 
-    # darksky
+    # weather
     "clear-day" : "28.bmp",
     "clear-night" : "29.bmp",
     "rain" : "35.bmp",
