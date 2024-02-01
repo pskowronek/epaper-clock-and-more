@@ -4,6 +4,6 @@
 
 export EPAPER_DEBUG_MODE=true
 export EPAPER_DEBUG_MODE_DONT_LOOP=true
+export WEATHERBIT_IO_KEY="travis-test"
 
-
-python main.py
+python3 main.py
