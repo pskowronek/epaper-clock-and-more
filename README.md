@@ -74,6 +74,7 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
       then you have to enable billing for it - just go [there](https://console.cloud.google.com/billing) - don't worry, they won't charge you if you are below the limits
   - a key for weather forecasts from OpenWeather - you can get it [here](https://openweathermap.org/home/sign_up) or *)
     - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider
+    - 2024.04 update: since One Call 2.5 access close(d) in June 2024, now 3.0 is being used. This requires a separate subscription to Open Call 3.0 (free tier, but billing data required) - see [here](https://openweathermap.org/one-call-transfer)
   - a key for weather forecasts from Weatherbit.io - you can get it [here](https://www.weatherbit.io/account/create) *)
     - alternative weather forecasts provider
   - a key for Air Quality Index data from Airly.eu - you can get it [here](https://developer.airly.eu/register) *)

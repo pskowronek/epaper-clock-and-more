@@ -33,7 +33,7 @@ export LON=19.9345672 # 20.0373204
 export GOOGLE_MAPS_KEY=GET_YOUR_OWN_KEY     # get the key from: https://developers.google.com/maps/documentation/embed/get-api-key
 
 # A key for weather forecasts from OpenWeather One Call API
-export OPENWEATHER_KEY=GET_YOUR_OWN_KEY     # get the key from: https://openweathermap.org/home/sign_up
+export OPENWEATHER_KEY=GET_YOUR_OWN_KEY     # get the key from: https://openweathermap.org/home/sign_up & subscribe to the One Call API 3.0 by clicking 'Subscribe' button in the "One Call API 3.0", https://openweathermap.org/full-price#onecall
 # A key for weather forecasts + alerts from Weatherbit.io API
 export WEATHERBIT_IO_KEY=GET_YOUR_OWN_KEY   # get the key from: https://www.weatherbit.io/account/create
 

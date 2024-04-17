@@ -1,4 +1,6 @@
 # Uses OpenWeather's One Call API: https://openweathermap.org/api/one-call-api - a result of DarkSky acquisition by Apple
+# 2024.04 update: "We would like to inform you about our plans to complete the migration from One Call 2.5 to One Call 3.0 that started 2 years ago.
+#                  In line with this, access to One Call 2.5 will be finally closed in June 2024. Link: https://openweathermap.org/one-call-transfer"
 from .acquire import Acquire
 
 import logging
@@ -37,7 +39,7 @@ class OpenWeather(Acquire):
 
         try:
             r = requests.get(
-                "https://api.openweathermap.org/data/2.5/onecall",
+                "https://api.openweathermap.org/data/3.0/onecall",
                 params = {
                     "appid" : self.key,
                     "lat" : self.lat,
