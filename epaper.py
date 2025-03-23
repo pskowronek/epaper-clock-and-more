@@ -110,8 +110,10 @@ class EPaper(object):
         os.environ.get("GOOGLE_MAPS_KEY"),
         os.environ.get("LAT"),
         os.environ.get("LON"),
+        os.environ.get("HOME_NAME"),
         os.environ.get("FIRST_TIME_TO_DESTINATION_LAT"),
         os.environ.get("FIRST_TIME_TO_DESTINATION_LON"),
+        os.environ.get("FIRST_DEST_NAME"),
         os.environ.get("GOOGLE_MAPS_UNITS", "metric"),
         "primary",
         int(os.environ.get("GOOGLE_MAPS_TTL", "10"))
@@ -120,8 +122,10 @@ class EPaper(object):
         os.environ.get("GOOGLE_MAPS_KEY"),
         os.environ.get("LAT"),
         os.environ.get("LON"),
+        os.environ.get("HOME_NAME"),
         os.environ.get("SECOND_TIME_TO_DESTINATION_LAT"),
         os.environ.get("SECOND_TIME_TO_DESTINATION_LON"),
+        os.environ.get("SECOND_DEST_NAME"),
         os.environ.get("GOOGLE_MAPS_UNITS", "metric"),
         "secondary",
         int(os.environ.get("GOOGLE_MAPS_TTL", "10"))

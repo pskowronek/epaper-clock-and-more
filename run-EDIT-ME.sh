@@ -25,6 +25,8 @@ exit 1
 # Enable this feature on your own responsibility!
 #export EPAPER_FAST_REFRESH=true
 
+# Homebase name (a name for LAT,LON below)
+export HOME_NAME-"Home"
 # Lat & lon of your home (a base point)
 export LAT=50.0618971 # using Rynek Główny @ KRK, as Plac Centralny doesn't temporarily work properly with Airly (#6) 50.0720519
 export LON=19.9345672 # 20.0373204
@@ -47,7 +49,7 @@ export AQICN_KEY=GET_YOUR_OWN_KEY           # get the key from: https://aqicn.or
 
 
 # Cache TTLs in minutes for each data fetcher (refer to free accounts limitations before you change the values any lower than 10m)
-export GOOGLE_MAPS_TTL=10
+export GOOGLE_MAPS_TTL=20
 export AIRLY_TTL=20
 export AQICN_TTL=20
 export OPENWEATHER_TTL=15
@@ -71,15 +73,18 @@ export WEATHER_UNITS=si                     # si (SI i.e. km) or mi (miles) for 
 export AQI_WARN_LEVEL=75                    # above this value the displayed gauge will become red (on supported displays)
 export WEATHER_STORM_DISTANCE_WARN=10       # display warning if storm is closer than this value in km/miles (take a look at units above) - if supported by weather provider
 
+
 # Lat & lon of destination you want to calculate the current driving time including traffic
 export FIRST_TIME_TO_DESTINATION_LAT=49.9823219
 export FIRST_TIME_TO_DESTINATION_LON=20.0578518
+export FIRST_DEST_NAME="Wieliczka"
 # The displayed gauge will become red (on supported displays) when driving time exceeds by % 
 export FIRST_TIME_WARN_ABOVE_PERCENT=50
 
 # Lat & lon of second destination (for a second member of a household?) you want to calculate the current driving time including traffic
 export SECOND_TIME_TO_DESTINATION_LAT=49.9684476
 export SECOND_TIME_TO_DESTINATION_LON=20.4303646
+export SECOND_DEST_NAME="Bochnia"
 # The displayed gauge will become red (on supported displays) when driving time exceeds by % 
 export SECOND_TIME_WARN_ABOVE_PERCENT=50
 
