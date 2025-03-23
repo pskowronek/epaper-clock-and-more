@@ -49,7 +49,7 @@ class GMaps(Acquire):
                 logging.warn("GMaps API returned the following error: %s" % response_parsed['error_message'])
                 result = True
             elif 'duration' not in response_text:
-                logging.warn("GMaps API returned no 'duration_in_traffic' data - probably empty or wrong api key /what a strange API that is/")
+                logging.warn("GMaps API returned no 'duration' data - probably empty or wrong api key.")
                 result = True
 
         return result
