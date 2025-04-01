@@ -70,7 +70,7 @@ More photos of the assembled e-paper 2.7inch display sitting on top of Raspberry
   - two destinations to check traffic delays
   - a key for traffic information from Google Maps - you can get it [here](https://developers.google.com/maps/documentation/embed/get-api-key) *)
     - it is wise to read Google Maps [documentation](https://developers.google.com/maps/documentation/)
-    - tl;dr: basically you have to enable Route Matrix API - follow [these](https://developers.google.com/maps/documentation/routes/get-api-key) instructions,
+    - tl;dr: basically you have to enable Route API - follow [these](https://developers.google.com/maps/documentation/routes/get-api-key) instructions,
       then you have to enable billing for it - just go [there](https://console.cloud.google.com/billing) - they won't charge you if you are below the limits (set a threshold warning to be sure)
   - a key for weather forecasts from OpenWeather - you can get it [here](https://openweathermap.org/home/sign_up) or *)
     - [One Call API](https://openweathermap.org/api/one-call-api) is being used to replace DarkSky provider
