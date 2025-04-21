@@ -5,7 +5,10 @@ _Language versions:_\
 [![FR](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-FR.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=fr&u=https://github.com/pskowronek/epaper-clock-and-more)
 [![ES](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-ES.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=es&u=https://github.com/pskowronek/epaper-clock-and-more)
 
-# Clock + weather + AQI + traffic - on Raspberry Pi & e-paper [![Build Status](https://app.travis-ci.com/pskowronek/epaper-clock-and-more.svg?token=Qdxpgtv2JGtmt3c6QSYt&branch=master)](https://app.travis-ci.com/pskowronek/epaper-clock-and-more) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/piosko){:target="_blank"}
+# Clock + weather + AQI + traffic - on Raspberry Pi & e-paper [![Build Status](https://app.travis-ci.com/pskowronek/epaper-clock-and-more.svg?token=Qdxpgtv2JGtmt3c6QSYt&branch=master)](https://app.travis-ci.com/pskowronek/epaper-clock-and-more)
+
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/piosko)
 
 
 This is a forked project of [waveshare-clock](https://github.com/prehensile/waveshare-clock) that only displayed clock and weather and supported only Waveshare 4.2inch B&W displays.
