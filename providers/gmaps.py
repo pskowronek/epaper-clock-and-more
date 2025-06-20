@@ -60,7 +60,7 @@ class GMaps(Acquire):
 
         body = { 
             'units': self.units,
-            #'departureTime': Timestamp in UTC - defaults to now
+            # 'departureTime': Timestamp in UTC - defaults to now
             'origins': [
                 {
                     'waypoint': {
@@ -113,7 +113,7 @@ class GMaps(Acquire):
                 provider='Google Maps',
                 time_to_dest=int(gmaps_data[0]['staticDuration'].rstrip('s')),  # in seconds
                 time_to_dest_in_traffic=int(gmaps_data[0]['duration'].rstrip('s')),  # in seconds
-                distance='{} km'.format(int(gmaps_data[0]['distanceMeters'])/1000),  # in km, string with km
+                distance='{} km'.format(int(gmaps_data[0]['distanceMeters']) / 1000),  # in km, string with km
                 origin_address=self.home_name,
                 destination_address=self.dest_name
             )
