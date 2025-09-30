@@ -18,7 +18,7 @@ pil-compat == 1.0.0
 pillow-pil == 0.1dev
 
 # main.py: 39
-pytz == 2023.3.post1
+pytz == 2025.2
 
 # airly.py: 8
 # gmaps.py: 8
