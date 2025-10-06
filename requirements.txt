@@ -10,7 +10,7 @@ RPi.GPIO == 0.7.1
 # epd2in7b_fast_lut.py: 33,34,35
 # epaper.py: 7
 # Pillow 10.4.0 is required for Python 3.9 and Raspbian GNU/Linux 11 (bullseye), not newer 11.x
-Pillow == 10.4.0
+Pillow == 11.3.0
 
 # main.py: 39
 pytz == 2025.2
