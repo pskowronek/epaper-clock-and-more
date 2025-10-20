@@ -24,7 +24,7 @@ requests == 2.32.5
 sdnotify == 0.3.2
 
 # main.py: 41
-tzlocal == 1.5.1
+tzlocal == 5.3.1
 
 # system_info.py
 psutil == 7.1.1
