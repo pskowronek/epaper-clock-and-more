@@ -27,7 +27,7 @@ sdnotify == 0.3.2
 tzlocal == 4.3.1
 
 # system_info.py
-psutil == 7.1.2
+psutil == 7.1.3
 
 # system_info.py
 uptime == 3.0.1
