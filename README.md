@@ -1,10 +1,3 @@
-_Language versions:_\
-[![EN](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-US.png)](https://github.com/pskowronek/epaper-clock-and-more) 
-[![PL](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-PL.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=pl&u=https://github.com/pskowronek/epaper-clock-and-more)
-[![DE](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-DE.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=de&u=https://github.com/pskowronek/epaper-clock-and-more)
-[![FR](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-FR.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=fr&u=https://github.com/pskowronek/epaper-clock-and-more)
-[![ES](https://github.com/pskowronek/epaper-clock-and-more/raw/master/www/flags/lang-ES.png)](https://translate.googleusercontent.com/translate_c?sl=en&tl=es&u=https://github.com/pskowronek/epaper-clock-and-more)
-
 # Clock + weather + AQI + traffic - on Raspberry Pi & e-paper [![Build Status](https://app.travis-ci.com/pskowronek/epaper-clock-and-more.svg?token=Qdxpgtv2JGtmt3c6QSYt&branch=master)](https://app.travis-ci.com/pskowronek/epaper-clock-and-more)
 
 
