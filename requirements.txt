@@ -18,7 +18,7 @@ pytz == 2026.1.post1
 # airly.py: 8
 # gmaps.py: 8
 # weather.py: 8
-requests == 2.32.5
+requests == 2.33.0
 
 # main.py: 36
 sdnotify == 0.3.2
