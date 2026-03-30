@@ -12,5 +12,7 @@ updates:
     ignore:
       - dependency-name: "pillow"
         versions: [">=11.0.0"]
+      - dependency-name: "requests"
+        versions: [">=2.33.0"]
       - dependency-name: "tzlocal"
         versions: [">=5.0.0"]
