@@ -13,7 +13,7 @@ RPi.GPIO == 0.7.1
 Pillow == 10.4.0
 
 # main.py: 39
-pytz == 2026.1.post1
+pytz == 2026.2
 
 # airly.py: 8
 # gmaps.py: 8
