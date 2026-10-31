@@ -60,14 +60,14 @@ class Drawing(object):
 
 
     def draw_weather_icon(self, buf, fn_icon, pos):
-        img_icon = Image.open("./resources/icons/" + fn_icon)
+        img_icon = Image.open("./resources/icons/" + fn_icon, formats=["BMP"])
         buf.paste(img_icon, pos)
 
 
     def draw_weather(self, buf, red_buf, weather, airly, prefer_airly_local_temp, black_on_red):
         start_pos = (0, 200)
 
-        back = Image.open('./resources/images/back.bmp')
+        back = Image.open('./resources/images/back.bmp', formats=["BMP"])
         buf.paste(back, start_pos)
 
         icon = icons.weather_icons.get(weather.icon, None)
@@ -124,12 +124,12 @@ class Drawing(object):
             if n == " ":
                 n = "_SPACE"
             fn = 'resources/images/%s.bmp' % n
-            img_num = Image.open(fn)
+            img_num = Image.open(fn, formats=["BMP"])
             img_num = img_num.resize((img_num.size[0], (int)(img_num.size[1] / 2)), Image.NEAREST)
             img_buf.paste(img_num, (start_pos[0] + offs, start_pos[1]))
             offs += im_width
         if use_hrs_mins_separator:
-            divider = Image.open('resources/images/clock-middle.bmp')
+            divider = Image.open('resources/images/clock-middle.bmp', formats=["BMP"])
             img_buf.paste(divider, (int(self.CANVAS_WIDTH / 2 - 10), start_pos[1] + 10))
 
 
@@ -166,7 +166,7 @@ class Drawing(object):
         no_warn = aqi.aqi < self.aqi_warn_level
         buf = black_buf if no_warn else red_buf
 
-        back = Image.open('./resources/images/back_aqi.bmp')
+        back = Image.open('./resources/images/back_aqi.bmp', formats=["BMP"])
         buf.paste(back, start_pos)
 
         draw = ImageDraw.Draw(buf)
@@ -186,7 +186,7 @@ class Drawing(object):
         no_warn = secs < 0 or secs * (100.0 + warn_above_percent) / 100.0 > secs_in_traffic
         buf = black_buf if no_warn else red_buf
 
-        back = Image.open("./resources/images/back_eta_{}.bmp".format(idx))
+        back = Image.open("./resources/images/back_eta_{}.bmp".format(idx), formats=["BMP"])
         buf.paste(back, (int(((idx + 1) * self.CANVAS_WIDTH) / 3) , 100))
 
         draw = ImageDraw.Draw(buf)
@@ -203,7 +203,7 @@ class Drawing(object):
     def draw_starting(self, is_mono):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = black_buf if (is_mono) else Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
-        shutdown_icon = Image.open("./resources/images/starting.bmp")
+        shutdown_icon = Image.open("./resources/images/starting.bmp", formats=["BMP"])
         red_buf.paste(shutdown_icon, (0, 0))
         return black_buf, red_buf
 
@@ -211,7 +211,7 @@ class Drawing(object):
     def draw_shutdown(self, is_mono):
         black_buf = Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
         red_buf = black_buf if (is_mono) else Image.new('1', (self.CANVAS_WIDTH, self.CANVAS_HEIGHT), 1)
-        shutdown_icon = Image.open("./resources/images/shutdown.bmp")
+        shutdown_icon = Image.open("./resources/images/shutdown.bmp", formats=["BMP"])
         red_buf.paste(shutdown_icon, (0, 0))
         return black_buf, red_buf
 

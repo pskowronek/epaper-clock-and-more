@@ -9,7 +9,8 @@ RPi.GPIO == 0.7.1
 # epd2in7b.py: 28,29,30
 # epd2in7b_fast_lut.py: 33,34,35
 # epaper.py: 7
-# Pillow 10.4.0 is required for Python 3.9 and Raspbian GNU/Linux 11 (bullseye), not newer 11.x
+# Pillow 10.4.0 is kept for Python 3.9 and Raspbian GNU/Linux 11 (bullseye): all security fixes (>=12.1.1) require Python >=3.10.
+# Mitigation: drawing.py opens only bundled BMP files (Image.open(..., formats=["BMP"])). Move to Bookworm+ to upgrade.
 Pillow == 10.4.0
 
 # main.py: 39
